@@ -1,0 +1,11 @@
+/*.root {
+    -fx-padding: 10 ;
+    -fx-alignment: center ;
+}*/
+
+.ProgressBar > .bar {
+    -fx-background-image: url("http://i.imgur.com/ohP7O6R.gif");/*http://i.imgur.com/hLA0LzZ.png");*/
+    -fx-background-position: right ;
+    -fx-background-color: transparent ;
+    -fx-background-repeat: repeat-x ;
+}
