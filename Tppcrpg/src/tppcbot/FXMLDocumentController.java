@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -34,6 +36,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
@@ -55,9 +58,7 @@ public class FXMLDocumentController implements Initializable {
     WebDriver driver;
     @FXML
     public ImageView imageView;
-    @FXML
     public TextField usernameField;
-    @FXML
     public TextField passwordField;
     String trainerid;
     String acc;
@@ -84,18 +85,6 @@ public class FXMLDocumentController implements Initializable {
     public Label playerLevelLabel;
     int startLevel;
     int currLevel;
-    @FXML
-    public TextField timeToRest;
-    @FXML
-    public TextField timeToRestRandom;
-    @FXML
-    public TextField timeBetweenRest;
-    @FXML
-    public TextField fightSleepTimeField;
-    @FXML
-    public TextField fightSleepRandomField;
-    @FXML
-    public TextField timeBetweenRestRandom;
     long startBigTime;
     long currBigTime;
     long estimatedTime;
@@ -169,8 +158,7 @@ public class FXMLDocumentController implements Initializable {
     public Label pokeItemLabel5;
     @FXML
     public Label pokeItemLabel6;
-    @FXML
-    public ComboBox<?> pokemonHuntComboBox;
+    //public ComboBox<?> pokemonHuntComboBox;
     @FXML
     public TextField accountNumberField;
     @FXML
@@ -212,15 +200,64 @@ public class FXMLDocumentController implements Initializable {
     public TextField ssAnneWinCountLabel;
     @FXML
     public Label ssAnneLabel;
-    
-    
+    @FXML
+    private ComboBox<String> pokemonHuntMapComboBox;
+    @FXML
+    private ComboBox<String> pokemonHuntPokeComboBox;
+    @FXML
+    private ComboBox<String> pokemonHuntItemComboBox;
+    String mapChoice = "map";
+    @FXML
+    private TextField startHunterAmount;
+    @FXML
+    private RadioButton radioMap;
+    @FXML
+    private RadioButton radioPoke;
+    @FXML
+    private RadioButton radioItem;
+    @FXML
+    public Label accListNumberLabel;
+    @FXML
+    public CheckBox listToCatchCheck;
+    @FXML
+    private TextField fightSleepMeanField;
+    @FXML
+    private TextField fightSleepDeviationField;
+    @FXML
+    private TextField deviationBetweenRest;
+    @FXML
+    private TextField restMean;
+    @FXML
+    private TextField restDeviation;
+    @FXML
+    private TextField meanBetweenRest;
+    Random ranGen;
+    double ran;
+    @FXML
+    private Label restAverageLabel;
+    @FXML
+    private TextField startSafariZonePoints;
+    @FXML
+    private AnchorPane startSilphCo;
+    @FXML
+    private TextField legendaryAmount;
+    @FXML
+    private ComboBox<?> legendaryCombo;
+    @FXML
+    public ComboBox<Account> accountMainCombo;
+    @FXML
+    public TextField accountField;
+    @FXML
+    public ListView<Account> accountExcludedCombo;
+    @FXML
+    public Label battleExpLabel;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = this;
         System.setProperty("webdriver.chrome.driver", "D:\\tppcJavafiles\\chromedriver.exe");
         driver = new ChromeDriver();
-        
+        ranGen = new Random();
         
         //System.setProperty("phantomjs.binary.path", "D:\\tppcJavafiles\\phantomjs.exe");
         //driver = new  PhantomJSDriver();
@@ -228,15 +265,24 @@ public class FXMLDocumentController implements Initializable {
         //System.setProperty("webdriver.phantomjs.driver","D:\\tppcJavafiles\\\\phantomjs.exe");
         
         
-        //CaptchaBreaker cb = CaptchaBreaker.getInstance();
-        //cb.setDriverAndController(controller, driver);
+        CaptchaBreaker cb = CaptchaBreaker.getInstance();
+        cb.setDriverAndController(controller, driver);
         Battle b =Battle.getInstance();
         b.setDriverAndController(controller, driver);
         Map m = Map.getInstance();
         m.setDriverAndController(controller, driver);
         Misc mi = Misc.getInstance();
         mi.setDriverAndController(controller, driver);
+        Party pa = Party.getInstance();
+        pa.setController(controller, driver);
         
+        pokemonHuntMapComboBox.getItems().setAll(m.getMaps());
+        pokemonHuntMapComboBox.getSelectionModel().selectFirst();
+        pokemonHuntPokeComboBox.getItems().setAll(m.getPokes());
+        pokemonHuntPokeComboBox.getSelectionModel().selectFirst();
+        pokemonHuntItemComboBox.getItems().setAll(m.getItems());
+        pokemonHuntItemComboBox.getSelectionModel().selectFirst();
+
         imageCalc = 0;
         multiProgress = 0;
         multiProgressBar.setProgress(multiProgress);
@@ -244,8 +290,18 @@ public class FXMLDocumentController implements Initializable {
         Account.loadLogFromFile();
         listToTradeAccount.setText("3461433");
         accList = Account.getAccList();
-        accountCombo.getItems().setAll(accList);
-        accountCombo.getSelectionModel().select(0);
+        if(!accList.isEmpty()){
+            accountCombo.getItems().setAll(accList.subList(1, accList.size()));
+            accountCombo.getSelectionModel().selectFirst();
+            accountMainCombo.getItems().setAll(accList.subList(1, accList.size()));
+            accountMainCombo.getSelectionModel().select(accList.get(0));
+        } else {
+            Account.getAccList().add(new Account("Placeholder", "", "", ""));
+            accountCombo.getItems().setAll(accList.subList(1, accList.size()));
+            accountCombo.getSelectionModel().selectFirst();
+            accountMainCombo.getItems().setAll(accList.subList(1, accList.size()));
+        }
+        accListNumberLabel.setText((accList.size()-1)+"");
         updateCalc = 0;
         //LevelProgress.setBlen
         pokeLabel = new ArrayList(Arrays.asList(pokeLabel1,pokeLabel2,pokeLabel3,pokeLabel4,pokeLabel5,pokeLabel6));
@@ -262,13 +318,16 @@ public class FXMLDocumentController implements Initializable {
             pokeLevelLabel.get(i).setText("");
         }
         
-        timeBetweenRest.setText(""+t.getFightSleepRandom());
-        timeBetweenRestRandom.setText(""+t.getFightSleepTime());
-        timeToRest.setText(""+t.getTimeBetweenRest());
-        timeToRestRandom.setText(""+t.getTimeBetweenRestRandom());
+        meanBetweenRest.setText(""+t.getMeanBetweenRest());
+        deviationBetweenRest.setText(""+t.getDeviationBetweenRest());
+        restMean.setText(""+t.getRestMean());
+        restDeviation.setText(""+t.getRestDeviation());
         
-        fightSleepTimeField.setText(""+t.getTimeToRest());
-        fightSleepRandomField.setText(""+t.getTimeToRestRandom());
+        fightSleepMeanField.setText(""+t.getFightSleepMean());
+        fightSleepDeviationField.setText(""+t.getFightSleepDeviation());
+        Account.loadLogFromFile2();
+        accountExcludedCombo.getItems().setAll(Account.getExcludeList());
+        
         accountTeamCombo.getItems().add("Team TPPC");
         accountTeamCombo.getItems().add("Team Rocket");
         accountTeamCombo.getItems().add("Team Magma");
@@ -276,15 +335,12 @@ public class FXMLDocumentController implements Initializable {
         accountTeamCombo.getItems().add("Team Galactic");
         accountTeamCombo.getSelectionModel().select(0);
         
-        accountGmailField.setText("zeroincidentssince");
-        
-        
+        accountGmailField.setText("officetheguy");
+        ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(deviationBetweenRest.getText()) + Integer.valueOf(meanBetweenRest.getText()));
 
         tm = trainerManager.getInstance();
         tm.setDriver(driver);
         FightBreaker = false;
-        usernameField.setText("Reddit");
-        passwordField.setText("RedditRedditqwer");
         trainingListView.getItems().setAll(tm.getList());
         trainingListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<trainer>() {
         @Override
@@ -333,7 +389,7 @@ public class FXMLDocumentController implements Initializable {
         Task task = new Task<Void>() {
             @Override public Void call() {
             Misc mi = Misc.getInstance();
-            mi.login(usernameField.getText(), passwordField.getText());
+            mi.login(accountMainCombo.getSelectionModel().getSelectedItem().getAccount(), accountMainCombo.getSelectionModel().getSelectedItem().getPassword());
 
             Platform.runLater(new Runnable() {
                 @Override public void run() {
@@ -344,7 +400,7 @@ public class FXMLDocumentController implements Initializable {
                     String imageString = driver.findElement(By.xpath("/html/body/div[@id='right']/ul/li[@class='pb']")).getAttribute("style");
                     System.out.println(imageString);
                     
-                    imageString = imageString.substring(imageString.indexOf("http:"), imageString.indexOf(")", imageString.indexOf("http:")));
+                    imageString = imageString.substring(imageString.indexOf("http:"), imageString.indexOf("\")", imageString.indexOf("http:")));
                     System.out.println(imageString);
                     pokeImageView.setImage(new Image(imageString));
 
@@ -375,7 +431,6 @@ public class FXMLDocumentController implements Initializable {
         while(updateCalc++ < 3){
             try {
                 if (driver.findElements(By.xpath("/html/body/div[@id='right']/ul/li[@class='hpSide']/img")).size() > 0){// && updateCalc > 6){
-                    System.out.println("Updating!");
                     updateCalc = 0;
                     //String imageString = driver.findElement(By.xpath("/html/body/div[@id='right']/ul/li[@class='pb']")).getAttribute("style");
                     //imageString = imageString.substring(23, imageString.length()-3);
@@ -440,21 +495,22 @@ public class FXMLDocumentController implements Initializable {
     
     public void bigSleep(){
         currBigTime = System.currentTimeMillis();
-        long timeElapsed = (long)((currBigTime - startBigTime)/ 1000); //seconds
-
-        if ( timeElapsed>  ((random + Integer.valueOf(timeBetweenRest.getText()))*60)){ //converted to seconds
-            System.out.println("Time elapsed: " + timeElapsed);
+        double timeElapsed = (double)((currBigTime - startBigTime)/ 1000); //seconds
+        
+        if ( timeElapsed>  ((ran)*60)){ //converted to seconds
+            System.out.println("Time elapsed: " + ((timeElapsed/60)-(timeElapsed%60)) + " minutes and " + timeElapsed%60 + " seconds");
             
             try {
-                double random = Integer.valueOf(timeToRestRandom.getText())*Math.random(); //minutes
-                long sleepv = (long) (Double.valueOf(timeToRest.getText())+Math.ceil(random))*60*1000; //millisecond
+                ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(restDeviation.getText()) + Integer.valueOf(restMean.getText()));
+                long sleepv = (long) (ran*60*1000); //millisecond
 
-                System.out.println("Sleeping for: " + Math.ceil(sleepv/1000) + " seconds");
+                System.out.println("Sleeping for: " + (sleepv)/1000/60 + " minutes");
                 Thread.sleep(sleepv);
             } catch (InterruptedException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            random = (long) Math.ceil(Math.random()*Integer.valueOf(timeBetweenRestRandom.getText())); //minutes
+            ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(deviationBetweenRest.getText()) + Integer.valueOf(meanBetweenRest.getText()));
+            System.out.println("Next sleep after: " + ran + " minutes");
             startBigTime = System.currentTimeMillis();
         }
         
@@ -462,8 +518,9 @@ public class FXMLDocumentController implements Initializable {
     
     public void defSleep(){
         try {
-            long sleepv = (long) (Integer.valueOf(fightSleepTimeField.getText()) + Math.ceil(Integer.valueOf(fightSleepRandomField.getText())*Math.random()));
-            //System.out.println(sleepv);
+
+            long sleepv = (long)(Math.abs(ranGen.nextGaussian()*Integer.valueOf(fightSleepDeviationField.getText())+Integer.valueOf(fightSleepMeanField.getText())));
+            //System.out.println("Random sleep: " + sleepv + " ms");
             Thread.sleep(sleepv);
         } catch (InterruptedException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -506,13 +563,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void saveSettingsAction(ActionEvent event) {
         Time t = Time.getInstance();
-        t.setFightSleepRandom(Integer.valueOf(timeBetweenRest.getText()));
-        t.setFightSleepTime(Integer.valueOf(timeBetweenRestRandom.getText()));
-        t.setTimeBetweenRest(Integer.valueOf(timeToRest.getText()));
-        t.setTimeBetweenRestRandom(Integer.valueOf(timeToRestRandom.getText()));
+        t.setMeanBetweenRest(Integer.valueOf(meanBetweenRest.getText()));
+        t.setDeviationBetweenRest(Integer.valueOf(deviationBetweenRest.getText()));
+        t.setRestMean(Integer.valueOf(restMean.getText()));
+        t.setRestDeviation(Integer.valueOf(restDeviation.getText()));
         
-        t.setTimeToRest(Integer.valueOf(fightSleepTimeField.getText()));
-        t.setTimeToRestRandom(Integer.valueOf(fightSleepRandomField.getText()));
+        t.setFightSleepMean(Integer.valueOf(fightSleepMeanField.getText()));
+        t.setFightSleepDeviation(Integer.valueOf(fightSleepDeviationField.getText()));
         t.saveLogToFile();
         
     }
@@ -544,7 +601,68 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void startSafariZoneAction(ActionEvent event) {
+        
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+   
+                int safariPoints = 0;
+                boolean safariBreaker = false;
+                FightBreaker = false;
+                driver.get("http://www.tppcrpg.net/safari_zone.php");
+                while(true){
+                    if(FightBreaker){
+                        break;
+                    }
+                    ArrayList<WebElement> imageList = (ArrayList<WebElement>) driver.findElements(By.tagName("img"));
 
+                    if(imageList.size() > 0 ){
+                        for(int e=0;e<imageList.size();e++){
+                            if(imageList.get(e).getAttribute("alt").equals("Safari Zone")){
+                                imageList.get(e).click();
+                                break;
+                            }
+                        }
+                    } 
+                    if(driver.findElements(By.name("Find")).size() > 0){
+                        driver.findElement(By.name("Find")).click();
+                    }
+
+                    controller.defSleep();
+                    if (driver.findElements(By.linkText("Submit To Safari Zone Catching Contest!")).size() > 0){
+                        driver.findElement(By.linkText("Submit To Safari Zone Catching Contest!")).click();
+                        for(int b=0;b<5;b++){
+                            if(driver.findElements(By.xpath("/html/body/div[@id='body']/div[@id='inner']/blockquote[@class='success']/strong")).size() > 0){
+
+                                safariPoints = Integer.valueOf(driver.findElement(By.xpath("/html/body/div[@id='body']/div[@id='inner']/blockquote[@class='success']/strong")).getText().replaceAll(",", "").replaceAll(" ", ""));
+                                System.out.println(safariPoints);
+                                if(Integer.valueOf(controller.startSafariZonePoints.getText()) < safariPoints){
+                                    safariBreaker = true;
+                                }
+                                break;
+                            }
+
+                        }
+                    }
+                    if (driver.findElements(By.linkText("Lets Battle!")).size() > 0 ){
+                        driver.get("http://www.tppcrpg.net/safari_zone.php");
+                    } else if (driver.findElements(By.partialLinkText("Return To")).size() > 0){
+                        driver.findElement(By.partialLinkText("Return To")).click();
+                    }
+                    if(safariBreaker){
+                        break;
+                    }
+                }
+                return null;
+            }
+
+        };
+        task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
+            if(newValue != null) {
+              Exception ex = (Exception) newValue;
+              ex.printStackTrace();
+            }
+        });
+        new Thread(task).start();
         
     }
 
@@ -568,14 +686,6 @@ public class FXMLDocumentController implements Initializable {
             }
         });
         new Thread(task).start();
-    }
-
-    @FXML
-    private void startHunterBotAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void pokemonHuntComboBoxAction(ActionEvent event) {
     }
 
     @FXML
@@ -651,7 +761,7 @@ public class FXMLDocumentController implements Initializable {
         Task task = new Task<Void>() {
             @Override public Void call() {
                 Misc mi = Misc.getInstance();
-                mi.accountsTrade();
+                mi.accountsCatch();
 
                 return null;
         }
@@ -752,10 +862,11 @@ public class FXMLDocumentController implements Initializable {
             }
         });
     new Thread(task).start();
+    
     }
 
     
-    
+    //Unused
     public void catchMap(String choice, String vari){
         if(choice.equals("map")){ //Map by map,  vari = map number
         
@@ -805,5 +916,255 @@ public class FXMLDocumentController implements Initializable {
         });
     new Thread(task).start();
     }
+
+    private void startSafariZonePoints(ActionEvent event) {
+    }
+
+
     
+    @FXML
+    private void startHunterBotAction(ActionEvent event) {
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                Map m = Map.getInstance();
+                if(mapChoice.equals("map")){
+                    m.startMap("map", pokemonHuntMapComboBox.getSelectionModel().getSelectedItem(), Integer.valueOf(startHunterAmount.getText()));
+                } else if(mapChoice.equals("poke")){
+                    m.startMap("poke", pokemonHuntPokeComboBox.getSelectionModel().getSelectedItem(), Integer.valueOf(startHunterAmount.getText()));
+                } else if(mapChoice.equals("item")){
+                    m.startMap("item", pokemonHuntItemComboBox.getSelectionModel().getSelectedItem(), Integer.valueOf(startHunterAmount.getText()));
+                }
+                return null;
+            }
+        };
+        task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
+                if(newValue != null) {
+                  Exception ex = (Exception) newValue;
+                  ex.printStackTrace();
+                }
+            });
+        new Thread(task).start();
+    }
+
+    @FXML
+    private void radioMapAction(ActionEvent event) {
+        mapChoice = "map";
+        pokemonHuntMapComboBox.visibleProperty().set(true);
+        pokemonHuntPokeComboBox.visibleProperty().set(false);
+        pokemonHuntItemComboBox.visibleProperty().set(false);
+        
+        radioPoke.selectedProperty().set(false);
+        radioItem.selectedProperty().set(false);
+    }
+
+    @FXML
+    private void radioPokeAction(ActionEvent event) {
+        mapChoice = "poke";
+        pokemonHuntMapComboBox.visibleProperty().set(false);
+        pokemonHuntPokeComboBox.visibleProperty().set(true);
+        pokemonHuntItemComboBox.visibleProperty().set(false);
+        
+        radioMap.selectedProperty().set(false);
+        radioItem.selectedProperty().set(false);
+    }
+
+    @FXML
+    private void radioItemAction(ActionEvent event) {
+        mapChoice = "item";
+        pokemonHuntMapComboBox.visibleProperty().set(false);
+        pokemonHuntPokeComboBox.visibleProperty().set(false);
+        pokemonHuntItemComboBox.visibleProperty().set(true);
+        
+        radioPoke.selectedProperty().set(false);
+        radioMap.selectedProperty().set(false);
+    }
+
+    @FXML
+    private void standardRandomAction(ActionEvent event) { // fix dis
+        ArrayList<Double> randomNumber1 = new ArrayList();
+        ArrayList<Double> randomNumber2 = new ArrayList();
+        ArrayList<Double> randomNumber3 = new ArrayList();
+
+        
+        double number = 10.0;
+        for(int i=0; i< number;i++){
+            ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(deviationBetweenRest.getText()) + Integer.valueOf(meanBetweenRest.getText()));
+            ran = Math.ceil(ran);
+            randomNumber1.add(ran);
+        } 
+        for(int i=0; i< number;i++){
+            ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(restDeviation.getText()) + Integer.valueOf(restMean.getText()));
+            ran = Math.ceil(ran);
+            randomNumber2.add(ran);
+        }
+        for(int i=0; i< number;i++){
+            ran = Math.abs(ranGen.nextGaussian()*Integer.valueOf(fightSleepDeviationField.getText()) + Integer.valueOf(fightSleepMeanField.getText()));
+            ran = Math.ceil(ran);
+            randomNumber3.add(ran);
+        } 
+        restAverageLabel.setText("Random between rest: " + randomNumber1+"\n"+"Random rest: " + randomNumber2+"\n"+"Random between actions: " + randomNumber3+"\n");
+    }
+
+    @FXML
+    private void trainingChallengeAction(ActionEvent event) {
+        //Add "was unaffected!" and ""
+        
+        Task task = new Task<Void>() {
+        @Override public Void call() {
+            FightBreaker = false;
+            long startTime = System.currentTimeMillis();
+            long startTrainingTime =System.currentTimeMillis();
+            startBigTime = System.currentTimeMillis();
+            driver.get("http://www.tppcrpg.net/training_challenge.php");
+            if(driver.findElements(By.linkText("Battle Now!")).size() > 0){
+                driver.findElement(By.linkText("Battle Now!")).click();
+            } else if (driver.findElements(By.partialLinkText("Your Starter")).size() > 0 ){
+                driver.findElement(By.partialLinkText("Your Starter")).click();
+                driver.get("http://www.tppcrpg.net/training_challenge.php");
+                driver.findElement(By.linkText("Battle Now!")).click();
+            }
+            while(true){
+                try{
+                    System.out.println((System.currentTimeMillis() - startTrainingTime)/60/1000+" Minutes ran.");
+                    if((System.currentTimeMillis() - startTrainingTime) > 4*60*60*1000){
+                        Misc mi = Misc.getInstance();
+                        mi.logout();
+                        Thread.sleep(2*60*60*1000 + 10*60*1000);
+                        mi.login(usernameField.getText(), passwordField.getText());
+                        driver.get("http://www.tppcrpg.net/training_challenge.php");
+                        if(driver.findElements(By.linkText("Battle Now!")).size() > 0){
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        } else if (driver.findElements(By.partialLinkText("Your Starter")).size() > 0 ){
+                            driver.findElement(By.partialLinkText("Your Starter")).click();
+                            driver.get("http://www.tppcrpg.net/training_challenge.php");
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        }
+                        startTrainingTime = System.currentTimeMillis();
+                        startBigTime = System.currentTimeMillis();
+                        startTime = System.currentTimeMillis();
+                    }
+                    if (FightBreaker){   //UI break button
+                        break;
+                    }
+                    estimatedTime  = System.currentTimeMillis() - startTime;
+                    if (estimatedTime > 10000){
+                        driver.get("http://www.tppcrpg.net/training_challenge.php");
+                        if(driver.findElements(By.linkText("Battle Now!")).size() > 0){
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        } else if (driver.findElements(By.partialLinkText("Your Starter")).size() > 0 ){
+                            driver.findElement(By.partialLinkText("Your Starter")).click();
+                            driver.get("http://www.tppcrpg.net/training_challenge.php");
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        }
+                        startTime = System.currentTimeMillis();
+                    }
+                    if (driver.findElements(By.id("Validate")).size() > 0 ){
+                        startTime = System.currentTimeMillis();
+                        CaptchaBreaker cb = CaptchaBreaker.getInstance();
+                        cb.solveCaptcha("Congratulations!");
+                        driver.get("http://www.tppcrpg.net/training_challenge.php");
+                        if(driver.findElements(By.linkText("Battle Now!")).size() > 0){
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        } else if (driver.findElements(By.partialLinkText("Your Starter")).size() > 0 ){
+                            driver.findElement(By.partialLinkText("Your Starter")).click();
+                            driver.get("http://www.tppcrpg.net/training_challenge.php");
+                            driver.findElement(By.linkText("Battle Now!")).click();
+                        }
+                        startTime = System.currentTimeMillis();
+                    }else if(driver.findElements(By.linkText("Restart Battle")).size() != 0){
+                        startTime = System.currentTimeMillis();
+                        driver.findElement(By.linkText("Restart Battle")).click();
+
+                    } else if (driver.findElements(By.className("submit")).size() != 0){
+                        startTime = System.currentTimeMillis();
+                        driver.findElement(By.className("submit")).click();
+                    }
+                    /*Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                            controller.updateUI();
+                         }
+                     });*/
+                    controller.defSleep();
+                    if(driver.findElements(By.className("Trainer1")).size() > 0 || driver.findElements(By.className("Trainer2")).size() > 0){
+                        List<WebElement> trainer1 = driver.findElements(By.className("Trainer1"));
+                        List<WebElement> trainer2 = driver.findElements(By.className("Trainer2"));
+                        for(int i=0;i<trainer1.size();i++){
+                            System.out.println(trainer1.get(i).getText());
+                            if(trainer1.get(i).getText().contains("wasn't very effective!")){
+                                try{
+                                    Select select = new Select(driver.findElement(By.name("MyMove")));
+                                    select.selectByIndex(1);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                        for(int i=0;i<trainer2.size();i++){
+                            System.out.println(trainer2.get(i).getText());
+                            if(trainer2.get(i).getText().contains("was unaffected!")){
+                                try{
+                                    Select select = new Select(driver.findElement(By.name("MyMove")));
+                                    select.selectByIndex(1);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            return null;
+            }
+        };
+        task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
+                if(newValue != null) {
+                  Exception ex = (Exception) newValue;
+                  ex.printStackTrace();
+                }
+            });
+        new Thread(task).start();
+        
+    }
+
+    @FXML
+    private void legendaryBotAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void accountAddAction(ActionEvent event) {
+        Account.accList.add(new Account(accountField.getText(), passwordField.getText(), "none", "none"));
+    }
+
+    @FXML
+    private void accountMainAction(ActionEvent event) {
+        List<Account> acc = new ArrayList();
+        Account.accList.set(0, accountMainCombo.getValue());
+        accountMainCombo.getSelectionModel().select(accList.get(0));
+
+    }
+
+    @FXML
+    private void accountExcludeAction(ActionEvent event) {
+        Account.excludeList.add(accountCombo.getSelectionModel().getSelectedItem());
+        accountExcludedCombo.getItems().setAll(Account.getExcludeList());
+        
+        
+    }
+
+    @FXML
+    private void accountIncludeAction(ActionEvent event) {
+        Account.excludeList.remove(accountExcludedCombo.getSelectionModel().getSelectedItem());
+        accountExcludedCombo.getItems().setAll(Account.getExcludeList());
+    }
+
+
 }

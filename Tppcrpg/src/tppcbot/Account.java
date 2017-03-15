@@ -27,13 +27,17 @@ import static tppcbot.Time.tm;
  */
 public class Account implements Serializable{
     static ArrayList<Account> accList = new ArrayList();
-
+    static ArrayList<Account> excludeList = new ArrayList();
+    
     static ArrayList getAccList() {
         /*if(accList == null){
             accList = new ArrayList();
         }*/
         
         return accList;
+    }
+    static ArrayList getExcludeList() {
+        return excludeList;
     }
     
     String account;
@@ -44,15 +48,22 @@ public class Account implements Serializable{
     
     @Override
     public String toString(){
-        return account + " : " + password;
+        return account;// + " : " + password;
     }
     
+    public String getAccount(){
+        return account;
+    }
+    public String getPassword(){
+        return password;
+    }
     
     Account(String account, String password, String email, String team) {
         this.prePromoDone = false;
         this.account = account;
         this.password = password;
         this.email = email;
+        
         this.team = team;
         System.out.println(this.account + ":" + this.password + " (" + this.email + " " + this.team+")");
         
@@ -104,6 +115,52 @@ public class Account implements Serializable{
             }
         }
 
-    } 
+    }
+     public static void loadLogFromFile2(){  //Loads previous log objects from a file.
+        FileInputStream fiStream = null;
+        File f = new File("D:\\tppcJavafiles\\accountsExclude.tmp");
+        if(f.exists()){
+            try {
+                fiStream = new FileInputStream("D:\\tppcJavafiles\\accountsExclude.tmp");
+                ObjectInputStream oiStream = new ObjectInputStream(fiStream);
+                excludeList = (ArrayList<Account>) oiStream.readObject();
+                System.out.println(accList);
+                oiStream.close();
+            } catch (FileNotFoundException ex) {
+                System.out.println("Can't find file.");
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+            }finally {
+                try {
+                    fiStream.close();
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
+    public static void saveLogToFile2(){ //Saves all log objects to file.
+        FileOutputStream foStream = null;
+        try {
+            foStream = new FileOutputStream("D:\\tppcJavafiles\\accountsExclude.tmp");
+            ObjectOutputStream ooStream = new ObjectOutputStream(foStream);
+            ooStream.writeObject(excludeList);
+            ooStream.close();
+        } catch (FileNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                foStream.close();
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
     
 }

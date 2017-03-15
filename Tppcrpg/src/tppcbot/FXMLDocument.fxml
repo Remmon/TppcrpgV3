@@ -12,46 +12,46 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="385.0" prefWidth="525.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tppcbot.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="516.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tppcbot.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TabPane layoutX="255.0" layoutY="-3.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab text="Main window">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="534.0">
                      <children>
                         <AnchorPane prefHeight="159.0" prefWidth="536.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <TextField fx:id="usernameField" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="151.0" promptText="Username" />
-                              <Button layoutX="172.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="54.0" prefWidth="48.0" text="Login" />
-                              <Button layoutX="222.0" layoutY="136.0" mnemonicParsing="false" onAction="#StopBotAction" prefHeight="17.0" prefWidth="56.0" text="Stop?" />
-                                <Button fx:id="button" layoutX="173.0" layoutY="107.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="104.0" text="Start FightBot!" />
-                              <TextField fx:id="trainingAccountField" layoutX="85.0" layoutY="107.0" prefHeight="25.0" prefWidth="85.0" promptText="Training account #" />
-                              <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="42.0" prefHeight="25.0" prefWidth="151.0" promptText="Password" />
-                              <ListView fx:id="trainingListView" layoutX="14.0" layoutY="136.0" prefHeight="202.0" prefWidth="202.0" />
-                              <Label fx:id="levelLabel" layoutX="14.0" layoutY="111.0" prefHeight="17.0" prefWidth="69.0" text="level: 13000" />
-                              <ProgressBar fx:id="LevelProgress" layoutX="221.0" layoutY="316.0" prefHeight="25.0" prefWidth="293.0" progress="0.5" styleClass="ProgressBar" stylesheets="@../../../../../../Pictures/tppc.css" AnchorPane.topAnchor="316.0">
+                              <Button layoutX="172.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="17.0" prefWidth="48.0" text="Login" />
+                              <Button layoutX="289.0" layoutY="12.0" mnemonicParsing="false" onAction="#StopBotAction" prefHeight="55.0" prefWidth="56.0" text="Stop?" />
+                                <Button fx:id="button" layoutX="173.0" layoutY="42.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="104.0" text="Start FightBot!" />
+                              <TextField fx:id="trainingAccountField" layoutX="83.0" layoutY="42.0" prefHeight="25.0" prefWidth="85.0" promptText="Training account #" />
+                              <ListView fx:id="trainingListView" layoutX="14.0" layoutY="77.0" prefHeight="173.0" prefWidth="208.0" />
+                              <Label fx:id="levelLabel" layoutX="14.0" layoutY="46.0" prefHeight="17.0" prefWidth="69.0" text="level: 13000" />
+                              <ProgressBar fx:id="LevelProgress" layoutX="19.0" layoutY="448.0" prefHeight="25.0" prefWidth="501.0" progress="0.5" styleClass="ProgressBar" AnchorPane.topAnchor="448.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
                               </ProgressBar>
-                              <Label fx:id="playerLevelLabel" alignment="CENTER" layoutX="222.0" layoutY="318.0" prefHeight="20.0" prefWidth="292.0" text="Level: " AnchorPane.topAnchor="318.0">
+                              <Label fx:id="playerLevelLabel" alignment="CENTER" layoutX="21.0" layoutY="451.0" prefHeight="20.0" prefWidth="499.0" text="Level: " AnchorPane.topAnchor="451.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="54.0" prefWidth="54.0" text="Logout" />
-                              <GridPane gridLinesVisible="true" layoutX="281.0" layoutY="137.0" prefHeight="169.0" prefWidth="232.0" style="-fx-grid-lines-visible: true;">
+                              <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="25.0" prefWidth="54.0" text="Logout" />
+                              <GridPane gridLinesVisible="true" layoutX="285.0" layoutY="77.0" prefHeight="169.0" prefWidth="232.0" style="-fx-grid-lines-visible: true;">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -73,7 +73,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage1" fitHeight="30.0" fitWidth="44.0" layoutX="17.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage1" fitHeight="30.0" fitWidth="30.0" layoutX="17.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel1" alignment="CENTER" layoutX="18.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
@@ -88,7 +88,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage2" fitHeight="30.0" fitWidth="44.0" layoutX="17.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage2" fitHeight="30.0" fitWidth="30.0" layoutX="17.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel2" alignment="CENTER" layoutX="18.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
@@ -103,7 +103,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage3" fitHeight="30.0" fitWidth="44.0" layoutX="18.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage3" fitHeight="30.0" fitWidth="30.0" layoutX="18.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel3" alignment="CENTER" layoutX="19.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
@@ -118,7 +118,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage4" fitHeight="30.0" fitWidth="44.0" layoutX="17.0" layoutY="-1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage4" fitHeight="30.0" fitWidth="30.0" layoutX="17.0" layoutY="-1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel4" alignment="CENTER" layoutX="18.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
@@ -133,7 +133,7 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage5" fitHeight="30.0" fitWidth="44.0" layoutX="17.0" layoutY="-1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage5" fitHeight="30.0" fitWidth="30.0" layoutX="17.0" layoutY="-1.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel5" alignment="CENTER" layoutX="18.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
@@ -148,113 +148,181 @@
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font></Label>
-                                          <ImageView fx:id="pokeImage6" fitHeight="30.0" fitWidth="44.0" layoutX="18.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0" />
+                                          <ImageView fx:id="pokeImage6" fitHeight="30.0" fitWidth="30.0" layoutX="18.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0" />
                                           <Label fx:id="pokeItemLabel6" alignment="CENTER" layoutX="19.0" layoutY="63.0" mouseTransparent="true" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
                               </GridPane>
-                              <ImageView fx:id="pokeImageView" fitHeight="76.0" fitWidth="51.0" layoutX="225.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                                 <image>
-                                    <Image url="@../../../../../../Pictures/286M.gif" />
-                                 </image>
-                              </ImageView>
-                              <TextField fx:id="breakField3" layoutX="425.0" layoutY="14.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #3" />
-                              <TextField fx:id="breakField1" layoutX="285.0" layoutY="14.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #1" />
-                              <TextField fx:id="breakField4" layoutX="285.0" layoutY="42.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #4" />
-                              <TextField fx:id="breakField6" layoutX="425.0" layoutY="42.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #6" />
-                              <TextField fx:id="breakField5" layoutX="355.0" layoutY="42.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #5" />
-                              <TextField fx:id="breakField2" layoutX="355.0" layoutY="14.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #2" />
-                              <CheckBox fx:id="breakEnabled" layoutX="355.0" layoutY="72.0" mnemonicParsing="false" text="Break enabled" />
-                              <Button layoutX="390.0" layoutY="107.0" mnemonicParsing="false" onAction="#completeAllAltTradesAction" text="Complete all trades?" />
+                              <ImageView fx:id="pokeImageView" fitHeight="78.0" fitWidth="56.0" layoutX="21.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+                              <TextField fx:id="breakField3" layoutX="451.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #3" />
+                              <TextField fx:id="breakField4" layoutX="287.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #4" />
+                              <TextField fx:id="breakField6" layoutX="451.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #6" />
+                              <TextField fx:id="breakField5" layoutX="371.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #5" />
+                              <TextField fx:id="breakField2" layoutX="371.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #2" />
+                              <Button layoutX="356.0" layoutY="11.0" mnemonicParsing="false" onAction="#completeAllAltTradesAction" prefHeight="57.0" prefWidth="158.0" text="Complete all trades" />
+                              <ComboBox fx:id="accountMainCombo" layoutX="14.0" layoutY="14.0" onAction="#accountMainAction" prefHeight="25.0" prefWidth="155.0" />
+                              <CheckBox fx:id="breakEnabled" layoutX="344.0" layoutY="330.0" mnemonicParsing="false" text="Level cap enabled" />
+                              <TextField fx:id="breakField1" layoutX="287.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #1" />
+                              <Label fx:id="battleExpLabel" layoutX="92.0" layoutY="339.0" text="Experience gained: " />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Sleep settings">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <ImageView fx:id="imageView" fitHeight="65.0" fitWidth="271.0" layoutX="251.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="captchaLabel" layoutX="253.0" layoutY="112.0" text="Captcha: " />
-                        <TextField fx:id="timeBetweenRestRandom" layoutX="123.0" layoutY="262.0" prefHeight="25.0" prefWidth="69.0" />
-                        <TextField fx:id="timeToRest" layoutX="123.0" layoutY="291.0" prefHeight="25.0" prefWidth="111.0" />
-                        <Label layoutX="17.0" layoutY="238.0" text="Time between rest:" />
-                        <Label layoutX="56.0" layoutY="326.0" text=" +Random:" />
-                        <TextField fx:id="timeToRestRandom" layoutX="123.0" layoutY="322.0" prefHeight="25.0" prefWidth="69.0" />
-                        <Label layoutX="51.0" layoutY="295.0" text="Time to rest:" />
-                        <TextField fx:id="timeBetweenRest" layoutX="123.0" layoutY="234.0" prefHeight="25.0" prefWidth="111.0" />
-                        <Label layoutX="56.0" layoutY="266.0" text=" +Random:" />
-                        <Button layoutX="365.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveSettingsAction" prefHeight="25.0" prefWidth="96.0" text="Save settings" />
-                        <Label layoutX="267.0" layoutY="238.0" text="Time to rest(ms): " />
-                        <TextField fx:id="fightSleepTimeField" layoutX="358.0" layoutY="234.0" />
-                        <Label layoutX="277.0" layoutY="266.0" text="+Random(ms): " />
-                        <TextField fx:id="fightSleepRandomField" layoutX="358.0" layoutY="262.0" prefHeight="25.0" prefWidth="109.0" />
-                        <Label layoutX="467.0" layoutY="266.0" text="* (0 - 1)" />
+                        <TextField fx:id="deviationBetweenRest" layoutX="123.0" layoutY="262.0" prefHeight="25.0" prefWidth="69.0" />
+                        <TextField fx:id="restMean" layoutX="123.0" layoutY="291.0" prefHeight="25.0" prefWidth="111.0" />
+                        <Label layoutX="14.0" layoutY="238.0" text="Mean between rests:" />
+                        <Label layoutX="49.0" layoutY="326.0" text="Std deviation:" />
+                        <TextField fx:id="restDeviation" layoutX="123.0" layoutY="322.0" prefHeight="25.0" prefWidth="69.0" />
+                        <Label layoutX="13.0" layoutY="297.0" text="Mean for rest length:" />
+                        <TextField fx:id="meanBetweenRest" layoutX="123.0" layoutY="234.0" prefHeight="25.0" prefWidth="111.0" />
+                        <Label layoutX="49.0" layoutY="266.0" text="Std deviation:" />
+                        <Button layoutX="411.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveSettingsAction" prefHeight="25.0" prefWidth="96.0" text="Save settings" />
+                        <Label layoutX="316.0" layoutY="238.0" text="Mean(ms):" />
+                        <TextField fx:id="fightSleepMeanField" layoutX="376.0" layoutY="234.0" prefHeight="25.0" prefWidth="131.0" />
+                        <Label layoutX="253.0" layoutY="266.0" text="Standard deviation(ms):" />
+                        <TextField fx:id="fightSleepDeviationField" layoutX="376.0" layoutY="262.0" prefHeight="25.0" prefWidth="131.0" />
                         <Line endX="600.0" endY="-20.0" layoutX="101.0" layoutY="223.0" startX="-100.0" startY="-20.0" strokeWidth="0.3" AnchorPane.leftAnchor="0.5" AnchorPane.rightAnchor="-165.5" />
-                        <Label layoutX="192.0" layoutY="266.0" text="* (0 - 1)" />
-                        <Label layoutX="192.0" layoutY="326.0" text="* (0 - 1)" />
-                        <Label layoutX="54.0" layoutY="214.0" text="(in minutes)" />
-                        <Label layoutX="267.0" layoutY="214.0" text="Time to rest between actions:" />
+                        <Label layoutX="54.0" layoutY="214.0" text="Big sleep(in minutes)" />
+                        <Label layoutX="255.0" layoutY="214.0" text="Time to rest between actions(normal distribution):" />
+                        <Line endX="100.0" layoutX="251.0" layoutY="305.0" opacity="0.52" rotate="90.0" startX="-100.0" />
+                        <Button layoutX="263.0" layoutY="322.0" mnemonicParsing="false" onAction="#standardRandomAction" text="Test &amp; refresh random" />
+                        <Label fx:id="restAverageLabel" layoutX="14.0" layoutY="14.0" text="Rest Averages here" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
             <Tab text="Misc bots">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane fx:id="startSilphCo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="166.0" layoutY="11.0" mnemonicParsing="false" onAction="#startSwapTokensAction" prefHeight="25.0" prefWidth="105.0" text="Start TokenBot" />
+                        <Button layoutX="158.0" layoutY="11.0" mnemonicParsing="false" onAction="#startSwapTokensAction" prefHeight="25.0" prefWidth="122.0" text="Start TokenBot" />
                         <Label fx:id="tokenLabel" layoutX="14.0" layoutY="15.0" text="Tokens Gained: 0" />
-                        <Button layoutX="165.0" layoutY="44.0" mnemonicParsing="false" onAction="#startSafariZoneAction" prefHeight="25.0" prefWidth="105.0" text="Start SafariBot" />
-                        <TextField layoutX="14.0" layoutY="44.0" prefHeight="25.0" prefWidth="145.0" promptText="Points to beat" />
-                        <TextField fx:id="ssAnneWinCountLabel" layoutX="14.0" layoutY="80.0" prefHeight="25.0" prefWidth="143.0" promptText="Wins to get" />
-                        <Button layoutX="166.0" layoutY="80.0" mnemonicParsing="false" onAction="#startSSAnneAction" prefHeight="25.0" prefWidth="104.0" text="Start ssAnneBot" />
-                        <Button layoutX="167.0" layoutY="317.0" mnemonicParsing="false" onAction="#startHunterBotAction" prefHeight="25.0" prefWidth="103.0" text="Start HunterBot" />
-                        <ComboBox fx:id="pokemonHuntComboBox" layoutX="15.0" layoutY="317.0" onAction="#pokemonHuntComboBoxAction" prefHeight="25.0" prefWidth="144.0" />
-                        <Label layoutX="280.0" layoutY="17.0" text="Warning: you may lose any pokemon that is not in your party." textFill="#ee0000">
+                        <Button layoutX="158.0" layoutY="44.0" mnemonicParsing="false" onAction="#startSafariZoneAction" prefHeight="25.0" prefWidth="123.0" text="Start SafariBot" />
+                        <TextField fx:id="startSafariZonePoints" layoutX="14.0" layoutY="44.0" prefHeight="25.0" prefWidth="134.0" promptText="Points to beat" />
+                        <TextField fx:id="ssAnneWinCountLabel" layoutX="14.0" layoutY="80.0" prefHeight="25.0" prefWidth="133.0" promptText="Wins to get" />
+                        <Button layoutX="158.0" layoutY="80.0" mnemonicParsing="false" onAction="#startSSAnneAction" prefHeight="25.0" prefWidth="122.0" />
+                        <Button layoutX="285.0" layoutY="296.0" mnemonicParsing="false" onAction="#startHunterBotAction" prefHeight="25.0" prefWidth="119.0" text="Start HunterBot" />
+                        <Label layoutX="282.0" layoutY="17.0" text="Warning: you may lose any pokemon that is not in your party." textFill="#ee0000">
                            <font>
                               <Font size="9.0" />
                            </font>
                         </Label>
-                        <Label layoutX="280.0" layoutY="86.0" text="Moves have to be: Ice ball, ancient power, giga drain, haze">
+                        <Label layoutX="289.0" layoutY="86.0" text="Moves have to be: Ice ball, ancient power, giga drain, haze">
                            <font>
                               <Font size="9.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ssAnneLabel" layoutX="167.0" layoutY="112.0" text="Wins: 0" />
+                        <Label fx:id="ssAnneLabel" alignment="CENTER" layoutX="159.0" layoutY="84.0" prefHeight="17.0" prefWidth="121.0" text="Start SSAnne" textAlignment="CENTER" />
+                        <ComboBox fx:id="pokemonHuntPokeComboBox" layoutX="74.0" layoutY="296.0" prefHeight="25.0" prefWidth="145.0" />
+                        <ComboBox fx:id="pokemonHuntItemComboBox" layoutX="74.0" layoutY="296.0" prefHeight="25.0" prefWidth="145.0" />
+                        <TextField fx:id="startHunterAmount" layoutX="222.0" layoutY="296.0" prefHeight="25.0" prefWidth="59.0" promptText="how many" />
+                        <RadioButton fx:id="radioMap" layoutX="15.0" layoutY="280.0" mnemonicParsing="false" onAction="#radioMapAction" selected="true" text="Map" />
+                        <RadioButton fx:id="radioPoke" layoutX="15.0" layoutY="300.0" mnemonicParsing="false" onAction="#radioPokeAction" text="Poke" />
+                        <RadioButton fx:id="radioItem" layoutX="15.0" layoutY="320.0" mnemonicParsing="false" onAction="#radioItemAction" text="Item" />
+                        <ComboBox fx:id="pokemonHuntMapComboBox" layoutX="74.0" layoutY="296.0" prefHeight="25.0" prefWidth="145.0" />
+                        <Button layoutX="161.0" layoutY="129.0" mnemonicParsing="false" onAction="#trainingChallengeAction" prefHeight="25.0" prefWidth="122.0" text="Training Challenge" />
+                        <TextField fx:id="legendaryAmount" disable="true" layoutX="223.0" layoutY="243.0" prefHeight="25.0" prefWidth="58.0" promptText="how many" />
+                        <Button disable="true" layoutX="286.0" layoutY="243.0" mnemonicParsing="false" onAction="#legendaryBotAction" prefHeight="25.0" prefWidth="118.0" text="Start LegendaryBot" />
+                        <ComboBox fx:id="legendaryCombo" disable="true" layoutX="72.0" layoutY="243.0" prefWidth="150.0" />
+                        <Label layoutX="410.0" layoutY="247.0" text="Party: 6x giratina" />
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
             <Tab text="Create accounts">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="641.0">
                      <children>
-                        <Button fx:id="continueManual" layoutX="398.0" layoutY="207.0" mnemonicParsing="false" onAction="#continueManualAction" prefHeight="25.0" prefWidth="114.0" text="Continue" />
-                        <TextField fx:id="accountNumberField" layoutX="43.0" layoutY="52.0" prefHeight="25.0" prefWidth="208.0" promptText="number of accounts" />
-                        <TextField fx:id="accountGmailField" layoutX="43.0" layoutY="166.0" prefHeight="25.0" prefWidth="135.0" promptText="gmail account" />
-                        <Button layoutX="263.0" layoutY="52.0" mnemonicParsing="false" onAction="#accountCreateAction" prefHeight="66.0" prefWidth="69.0" text="Start AccBot" />
-                        <TextField fx:id="accountPrefixField" layoutX="43.0" layoutY="91.0" prefHeight="25.0" prefWidth="208.0" promptText="Account prefix" />
-                        <TextField fx:id="accountPasswordField" layoutX="43.0" layoutY="128.0" prefHeight="25.0" prefWidth="208.0" promptText="PasswordHere" />
-                        <ComboBox fx:id="accountTeamCombo" layoutX="43.0" layoutY="201.0" prefHeight="25.0" prefWidth="208.0" />
-                        <RadioButton fx:id="fPokeRadio" layoutX="43.0" layoutY="239.0" mnemonicParsing="false" onAction="#fPokeRadioAction" selected="true" text="1st " />
-                        <RadioButton fx:id="sPokeRadio" layoutX="112.0" layoutY="239.0" mnemonicParsing="false" onAction="#sPokeRadioAction" text="2nd" />
-                        <RadioButton fx:id="tPokeRadio" layoutX="182.0" layoutY="239.0" mnemonicParsing="false" onAction="#tPokeRadioAction" text="3rd poke" />
-                        <Label layoutX="183.0" layoutY="170.0" text="\@gmail.com" />
-                        <ComboBox fx:id="accountCombo" layoutX="43.0" layoutY="317.0" prefHeight="25.0" prefWidth="209.0" />
-                        <Button layoutX="398.0" layoutY="317.0" mnemonicParsing="false" onAction="#listToTradeAction" prefHeight="25.0" prefWidth="113.0" text="Trade To Account" />
-                        <Button layoutX="398.0" layoutY="280.0" mnemonicParsing="false" onAction="#listToCatchAction" prefHeight="25.0" prefWidth="113.0" text="Catch some" />
-                        <TextField fx:id="listToTradeAccount" layoutX="306.0" layoutY="317.0" prefHeight="25.0" prefWidth="84.0" promptText="#Account" />
-                        <Button layoutX="347.0" layoutY="51.0" mnemonicParsing="false" onAction="#verifyAccountsAction" prefHeight="24.0" prefWidth="149.0" text="Verify accounts" />
-                        <TextField fx:id="accountGmailPassField" layoutX="347.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0" promptText="Email password for verify" />
-                        <TextField fx:id="listToCatchAmount" layoutX="307.0" layoutY="280.0" prefHeight="25.0" prefWidth="81.0" promptText="Amount to catch" />
-                        <Button layoutX="397.0" layoutY="244.0" mnemonicParsing="false" onAction="#getTeamPromoAction" prefHeight="25.0" prefWidth="116.0" text="Get Team Promo" />
-                        <Button fx:id="manual" layoutX="396.0" layoutY="207.0" mnemonicParsing="false" onAction="#manualAction" prefHeight="25.0" prefWidth="117.0" text="Manual" />
-                        <Button layoutX="367.0" layoutY="175.0" mnemonicParsing="false" onAction="#startPreFighterAction" prefHeight="25.0" prefWidth="147.0" text="Start PrePromo Fighter" />
-                        <ProgressBar fx:id="multiProgressBar" layoutX="47.0" layoutY="284.0" prefWidth="200.0" progress="0.5" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="207.0" layoutX="276.0" layoutY="241.0" stroke="BLACK" strokeType="INSIDE" width="223.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="0.9857142857142858" startY="0.8666666666666667">
+                                 <stops>
+                                    <Stop color="#e1e1e1fa" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="217.0" layoutX="275.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="225.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="0.9857142857142858" startY="0.8666666666666667">
+                                 <stops>
+                                    <Stop color="#e1e1e1fa" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="70.0" layoutX="33.0" layoutY="378.0" stroke="BLACK" strokeType="INSIDE" width="225.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="0.9857142857142858" startY="0.8666666666666667">
+                                 <stops>
+                                    <Stop color="#e1e1e1fa" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="71.0" layoutX="33.0" layoutY="294.0" stroke="BLACK" strokeType="INSIDE" width="225.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="0.9857142857142858" startY="0.8666666666666667">
+                                 <stops>
+                                    <Stop color="#e1e1e1fa" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="261.0" layoutX="33.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="225.0">
+                           <fill>
+                              <LinearGradient endX="1.0" endY="0.9857142857142858" startY="0.8666666666666667">
+                                 <stops>
+                                    <Stop color="#e1e1e1fa" />
+                                    <Stop color="WHITE" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </fill>
+                        </Rectangle>
+                        <Button fx:id="continueManual" disable="true" layoutX="377.0" layoutY="411.0" mnemonicParsing="false" onAction="#continueManualAction" prefHeight="25.0" prefWidth="114.0" text="Continue" />
+                        <TextField fx:id="accountNumberField" layoutX="40.0" layoutY="102.0" prefHeight="25.0" prefWidth="210.0" promptText="number of accounts" />
+                        <TextField fx:id="accountGmailField" layoutX="40.0" layoutY="139.0" prefHeight="25.0" prefWidth="135.0" promptText="gmail account" />
+                        <Button layoutX="40.0" layoutY="234.0" mnemonicParsing="false" onAction="#accountCreateAction" prefHeight="33.0" prefWidth="210.0" text="Start Account maker" />
+                        <TextField fx:id="accountPrefixField" layoutX="40.0" layoutY="23.0" prefHeight="25.0" prefWidth="210.0" promptText="Account name" />
+                        <TextField fx:id="accountPasswordField" layoutX="40.0" layoutY="62.0" prefHeight="25.0" prefWidth="210.0" promptText="Password" />
+                        <ComboBox fx:id="accountTeamCombo" layoutX="40.0" layoutY="174.0" prefHeight="25.0" prefWidth="210.0" />
+                        <RadioButton fx:id="fPokeRadio" layoutX="43.0" layoutY="212.0" mnemonicParsing="false" onAction="#fPokeRadioAction" selected="true" text="1st " />
+                        <RadioButton fx:id="sPokeRadio" layoutX="112.0" layoutY="212.0" mnemonicParsing="false" onAction="#sPokeRadioAction" text="2nd" />
+                        <RadioButton fx:id="tPokeRadio" layoutX="182.0" layoutY="212.0" mnemonicParsing="false" onAction="#tPokeRadioAction" text="3rd poke" />
+                        <Label layoutX="183.0" layoutY="143.0" text="\@gmail.com" />
+                        <ComboBox fx:id="accountCombo" layoutX="287.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" />
+                        <Button layoutX="377.0" layoutY="373.0" mnemonicParsing="false" onAction="#listToTradeAction" prefHeight="25.0" prefWidth="113.0" text="Trade To Account" />
+                        <Button layoutX="377.0" layoutY="304.0" mnemonicParsing="false" onAction="#listToCatchAction" prefHeight="25.0" prefWidth="113.0" text="Catch some" />
+                        <TextField fx:id="listToTradeAccount" layoutX="284.0" layoutY="373.0" prefHeight="25.0" prefWidth="84.0" promptText="#Account" />
+                        <Button layoutX="40.0" layoutY="333.0" mnemonicParsing="false" onAction="#verifyAccountsAction" prefHeight="25.0" prefWidth="210.0" text="Verify accounts" />
+                        <TextField fx:id="listToCatchAmount" layoutX="285.0" layoutY="304.0" prefHeight="25.0" prefWidth="81.0" promptText="Amount to catch" />
+                        <Button layoutX="285.0" layoutY="338.0" mnemonicParsing="false" onAction="#getTeamPromoAction" prefHeight="25.0" prefWidth="205.0" text="Get Team Promo" />
+                        <Button fx:id="manual" disable="true" layoutX="285.0" layoutY="411.0" mnemonicParsing="false" onAction="#manualAction" prefHeight="25.0" prefWidth="117.0" text="Manual" />
+                        <Button layoutX="285.0" layoutY="254.0" mnemonicParsing="false" onAction="#startPreFighterAction" prefHeight="25.0" prefWidth="205.0" text="Start PrePromo Fighter" />
+                        <ProgressBar fx:id="multiProgressBar" layoutX="9.0" layoutY="461.0" prefHeight="25.0" prefWidth="623.0" progress="0.5" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+                        <Label fx:id="accListNumberLabel" layoutX="287.0" layoutY="48.0" text="Label" />
+                        <CheckBox fx:id="listToCatchCheck" layoutX="285.0" layoutY="284.0" mnemonicParsing="false" text="Only catch if PrePromo is not done" />
+                        <PasswordField fx:id="accountGmailPassField" layoutX="40.0" layoutY="302.0" prefHeight="25.0" prefWidth="210.0" promptText="gmail password" />
+                        <Button layoutX="40.0" layoutY="417.0" mnemonicParsing="false" onAction="#accountAddAction" prefHeight="17.0" prefWidth="210.0" text="add account to list manually" textOverrun="CENTER_ELLIPSIS" />
+                        <TextField fx:id="accountField" layoutX="40.0" layoutY="385.0" prefHeight="25.0" prefWidth="104.0" promptText="account" />
+                        <TextField fx:id="passwordField" layoutX="150.0" layoutY="385.0" prefHeight="25.0" prefWidth="100.0" promptText="password" />
+                        <Button layoutX="420.0" layoutY="23.0" mnemonicParsing="false" onAction="#accountExcludeAction" prefHeight="25.0" prefWidth="69.0" text="Exclude" />
+                        <ListView fx:id="accountExcludedCombo" layoutX="286.0" layoutY="90.0" prefHeight="126.0" prefWidth="126.0" />
+                        <Button layoutX="420.0" layoutY="128.0" mnemonicParsing="false" onAction="#accountIncludeAction" prefHeight="51.0" prefWidth="69.0" text="Include" />
+                        <Label layoutX="287.0" layoutY="66.0" text="Excluded accounts below" />
                      </children>
                   </AnchorPane>
               </content>

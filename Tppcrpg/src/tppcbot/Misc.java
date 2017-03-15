@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -27,6 +28,7 @@ public class Misc {
     FXMLDocumentController controller;
     WebDriver driver;
     int value;
+    ArrayList<Account> accList;
     
     private Misc(){
     
@@ -83,6 +85,7 @@ public class Misc {
                     if(controller.FightBreaker){
                         break;
                     }
+                    controller.defSleep();
                 }
 
                 if(controller.FightBreaker){
@@ -97,6 +100,7 @@ public class Misc {
                 } else {
                     break;
                 }
+                
             } catch(Exception e){
                 e.printStackTrace();
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -107,6 +111,7 @@ public class Misc {
                     Logger.getLogger(Misc.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            controller.defSleep();
         }
         return tokens;
     }
@@ -160,6 +165,9 @@ public class Misc {
         int caught =0;
         while(true){
             try{
+                if(controller.FightBreaker){
+                    break;
+                }
                 driver.findElement(By.name("Find")).click();
                 if (driver.findElements(By.name("Catch")).size() > 0 ){
                     caught++;
@@ -191,10 +199,7 @@ public class Misc {
                     tokens = startDonate(tokens);
                     driver.get("http://www.tppcrpg.net/map.php?Map="+mapid);
                 }
-                if (controller.FightBreaker){
-                    break;
-                }
-                controller.defSleep();
+                
             } catch(Exception e){
                 e.printStackTrace();
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -205,6 +210,7 @@ public class Misc {
                     Logger.getLogger(Misc.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            controller.defSleep();
         }
         
         return tokens;
@@ -214,6 +220,7 @@ public class Misc {
     void ssAnne() {
         long startTime = System.currentTimeMillis();
         long estimatedTime;
+        controller.startBigTime = System.currentTimeMillis();
         value = 0;
         boolean hazebool = true;
         controller.FightBreaker = false;
@@ -237,7 +244,6 @@ public class Misc {
                         break;
                     }
                 }
-                System.out.println("Getting past");
                 List<WebElement> alwe = driver.findElements(By.className("Trainer1"));
                 if(alwe.size()>0){
                     System.out.println("Check");
@@ -258,7 +264,6 @@ public class Misc {
                         }
                     }
                 }
-                System.out.println("Getting past 2");
 
                 if(value > Integer.valueOf(controller.ssAnneWinCountLabel.getText()) && hazebool){
                     Select select = new Select(driver.findElement(By.id("MyMove")));
@@ -271,38 +276,38 @@ public class Misc {
                 if(driver.findElement(By.xpath("/html/body/div[@id='body']/div[@id='inner']/div[@id='battleWindow']/div[@id='ActiveBoxes']/div[@id='Trainer1_Active']/div[@class='innerContent']/fieldset/div[@class='hpBar']")).getAttribute("title").equals("0% HP Remaining")){
                     driver.findElement(By.className("rosterContent")).findElement(By.partialLinkText("")).click();
                 }
-                System.out.println("Getting past 3");
 
 
                 estimatedTime = System.currentTimeMillis() - startTime;
-                if (estimatedTime > 20000) {
+                if (estimatedTime > 10000) {
                     System.out.println("Timed out!");
                     driver.get("http://www.tppcrpg.net/resume_battle.php");
-                    driver.findElement(By.linkText("S.S. Anne"));
+                    driver.findElements(By.linkText("S.S. Anne")).get(driver.findElements(By.linkText("S.S. Anne")).size()-1).click();
                     startTime = System.currentTimeMillis();
                 }
 
-                System.out.println("Getting past 4");
 
 
-                /*Platform.runLater(new Runnable() {
+                Platform.runLater(new Runnable() {
                     @Override public void run() {
                        controller.updateUI();
 
                     }
-                });*/
+                });
 
                 controller.defSleep();
-                controller.bigSleep();
+                //controller.bigSleep();
+            } catch(org.openqa.selenium.StaleElementReferenceException ex){
+                System.out.println("Stale element error (nothing to worry about)");
             } catch(Exception e){
                 e.printStackTrace();
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                /*BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 System.out.print("Exception, enter for continue.");
                 try {
                     String s = br.readLine();
                 } catch (IOException ex) {
                     Logger.getLogger(Misc.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
             }
         }
 
@@ -310,13 +315,15 @@ public class Misc {
     }
 
     void makeAccounts(){
+        String accountName ="";
+        int calc = 0;
         for(int i=0; i<Integer.valueOf(controller.accountNumberField.getText());i++){
             System.out.println("Creatin account #" + i);
             driver.get("http://www.tppcrpg.net/signup.php");
 
             if(driver.findElements(By.id("NickName")).size() > 0){
-                int accM = (int)(Math.random()*10000);
-                driver.findElement(By.id("NickName")).sendKeys(controller.accountPrefixField.getText()+accM);
+                accountName =controller.accountPrefixField.getText();
+                driver.findElement(By.id("NickName")).sendKeys(accountName);
                 driver.findElement(By.id("Password")).sendKeys(controller.accountPasswordField.getText());
                 driver.findElement(By.id("ConfirmPassword")).sendKeys(controller.accountPasswordField.getText());
                 driver.findElement(By.id("Email")).sendKeys(controller.accountGmailField.getText()+"+"+controller.accountPrefixField.getText()+"@gmail.com");
@@ -331,16 +338,38 @@ public class Misc {
                 Select tselect = new Select(driver.findElement(By.id("Team")));
                 tselect.selectByIndex(controller.accountTeamCombo.getSelectionModel().getSelectedIndex()+1);
                 CaptchaBreaker cb = CaptchaBreaker.getInstance();
+                
+                String accountNameAdd = "";
+                while(true){
+                    try{
+                        if(driver.findElement(By.id("taken")).getText().equals("Name Taken!")){
+                            if(calc > 0){
+                                driver.findElement(By.id("NickName")).sendKeys(Keys.BACK_SPACE);
+                            }
+                            driver.findElement(By.id("NickName")).sendKeys(""+(++calc));
+                            accountNameAdd = "" +calc; 
+                            driver.findElement(By.id("Password")).sendKeys("");
+                        } else if (driver.findElement(By.id("taken")).getText().equals("Name Available!")){
+                            break;
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    controller.defSleep();
+                }
+                accountName = accountName + accountNameAdd;
                 cb.solveCaptcha("Validation Image");
-                Account.getAccList().add(new Account(controller.accountPrefixField.getText()+accM, controller.accountPasswordField.getText(), controller.accountGmailField.getText()+"+"+controller.accountPrefixField.getText()+"@gmail.com", controller.accountTeamCombo.getSelectionModel().getSelectedItem()));
-                ArrayList<Account> accList = Account.getAccList();
-                controller.accountCombo.getItems().setAll(accList);
-
+                accList = Account.getAccList();
+                controller.accountCombo.getItems().setAll(accList.subList(1, accList.size()));
+                controller.accountMainCombo.getItems().setAll(accList.subList(1, accList.size()));
+                
+                Account.getAccList().add(new Account(accountName, controller.accountPasswordField.getText(), controller.accountGmailField.getText()+"+"+controller.accountPrefixField.getText()+"@gmail.com", controller.accountTeamCombo.getSelectionModel().getSelectedItem()));
             }
             controller.multiProgress = (float)i / (float)(Integer.valueOf(controller.accountNumberField.getText()) -1);
             Platform.runLater(new Runnable() {
                 @Override public void run() {
-                   controller.multiProgressBar.setProgress(controller.multiProgress);
+                    controller.accListNumberLabel.setText((accList.size()-1)+"");
+                    controller.multiProgressBar.setProgress(controller.multiProgress);
                 }
             });
 
@@ -349,43 +378,53 @@ public class Misc {
     }
 
     public void accountsTrade(){
-        ArrayList<Account> accList = Account.getAccList();
-        for(int i=0;i<accList.size();i++){
-                driver.get("http://www.tppcrpg.net/login.php");
-                driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
-                driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
-                if(driver.findElements(By.name("Validate")).size() > 0){
-                    CaptchaBreaker cb = CaptchaBreaker.getInstance();
-                    cb.solveCaptcha("Validation Image");
+        accList = Account.getAccList();
+        boolean excludedCheck = false;
+        for(int i=1;i<accList.size();i++){
+            excludedCheck = false;
+            for(int e=0;e<controller.accountExcludedCombo.getItems().size();e++){
+                if(controller.accountExcludedCombo.getItems().get(e).equals(accList.get(i))){
+                    excludedCheck = true;
                 }
-                if(driver.findElements(By.className("submit")).size() > 0){
-                    driver.findElement(By.className("submit")).click();
-                }
-
-                driver.get("http://www.tppcrpg.net/create_trade.php");
-                driver.findElement(By.name("id")).sendKeys(controller.listToTradeAccount.getText());
-                driver.findElement(By.className("submit")).click();
-
-                Select select = new Select(driver.findElement(By.id("CP")));
-                for(int u=0;u<select.getOptions().size();u++){
-                    select.selectByIndex(u);
-                }
-
-                driver.findElement(By.className("submit")).click();
-                controller.multiProgress = (float)i / (float)(accList.size() -1);
-                    Platform.runLater(new Runnable() {
-                        @Override public void run() {
-                           controller.multiProgressBar.setProgress(controller.multiProgress);
-                        }
-                    });
-                driver.get("http://www.tppcrpg.net/logout.php");
-                controller.defSleep();
             }
-    
+            if(excludedCheck){
+                continue;
+            }
+            driver.get("http://www.tppcrpg.net/login.php");
+            driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).getAccount());
+            driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).getPassword());
+            if(driver.findElements(By.name("Validate")).size() > 0){
+                CaptchaBreaker cb = CaptchaBreaker.getInstance();
+                cb.solveCaptcha("Validation Image");
+            }
+            if(driver.findElements(By.className("submit")).size() > 0){
+                driver.findElement(By.className("submit")).click();
+            }
+
+            driver.get("http://www.tppcrpg.net/create_trade.php");
+            driver.findElement(By.name("id")).sendKeys(controller.listToTradeAccount.getText());
+            driver.findElement(By.className("submit")).click();
+
+            Select select = new Select(driver.findElement(By.id("CP")));
+            for(int u=0;u<select.getOptions().size();u++){
+                select.selectByIndex(u);
+            }
+
+            driver.findElement(By.className("submit")).click();
+            controller.multiProgress = (float)(i+1) / (float)(accList.size());
+                Platform.runLater(new Runnable() {
+                    @Override public void run() {
+                       controller.multiProgressBar.setProgress(controller.multiProgress);
+                    }
+                });
+            driver.get("http://www.tppcrpg.net/logout.php");
+            controller.defSleep();
+        }
+
     }
 
     void verifyAccounts() {
-        ArrayList<Account> accList = Account.getAccList();
+        
         CheckingMails cm = new CheckingMails(controller.accountGmailField.getText()+"@gmail.com",controller.accountGmailPassField.getText());
             ArrayList<String> urls = cm.check();
             for(int i=0;i<urls.size();i++){
@@ -395,7 +434,7 @@ public class Misc {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                controller.multiProgress = (float)i / (float)(accList.size() -1);
+                controller.multiProgress = (float)(i+1) / (float)(urls.size());
                 Platform.runLater(new Runnable() {
                     @Override public void run() {
                        controller.multiProgressBar.setProgress(controller.multiProgress);
@@ -405,8 +444,18 @@ public class Misc {
     }
 
     void accountsPromo() {
-        ArrayList<Account> accList = Account.getAccList();
-        for(int i=0;i<accList.size();i++){
+        accList = Account.getAccList();
+        boolean excludedCheck = false;
+        for(int i=1;i<accList.size();i++){
+            excludedCheck = false;
+            for(int e=0;e<controller.accountExcludedCombo.getItems().size();e++){
+                if(controller.accountExcludedCombo.getItems().get(e).equals(accList.get(i))){
+                    excludedCheck = true;
+                }
+            }
+            if(excludedCheck){
+                continue;
+            }
             driver.get("http://www.tppcrpg.net/login.php");
             driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
             driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
@@ -430,7 +479,7 @@ public class Misc {
 
             /***************************/
             controller.defSleep();
-            controller.multiProgress = (float)i / (float)(accList.size() -1);
+            controller.multiProgress = (float)(i+1) / (float)(accList.size());
             Platform.runLater(new Runnable() {
                 @Override public void run() {
                    controller.multiProgressBar.setProgress(controller.multiProgress);
@@ -442,8 +491,18 @@ public class Misc {
     }
 
     void accountsManual() {
-        ArrayList<Account> accList = Account.getAccList();
-        for(int i=0;i<accList.size();i++){
+        accList = Account.getAccList();
+        boolean excludedCheck = false;
+        for(int i=1;i<accList.size();i++){
+            excludedCheck = false;
+            for(int e=0;e<controller.accountExcludedCombo.getItems().size();e++){
+                if(controller.accountExcludedCombo.getItems().get(e).equals(accList.get(i))){
+                    excludedCheck = true;
+                }
+            }
+            if(excludedCheck){
+                continue;
+            }
             driver.get("http://www.tppcrpg.net/login.php");
             driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
             driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
@@ -469,7 +528,7 @@ public class Misc {
 
             }
 
-            controller.multiProgress = (float)i / (float)(accList.size() -1);
+            controller.multiProgress = (float)(i+1) / (float)(accList.size());
             Platform.runLater(new Runnable() {
                 @Override public void run() {
                    controller.multiProgressBar.setProgress(controller.multiProgress);
@@ -486,39 +545,52 @@ public class Misc {
         Battle b = Battle.getInstance();
         long random = 0;
         long estimatedTime = 0;
-        ArrayList<Account> accList = Account.getAccList();
-        for(int i=0;i<accList.size();i++){
-            System.out.println("Promo Done already: " + accList.get(i).prePromoDone);
+        accList = Account.getAccList();
+        boolean excludedCheck =false;
+        for(int i=1;i<accList.size();i++){
+            //System.out.println("Promo Done already: " + accList.get(i).prePromoDone);
+            excludedCheck = false;
+            if (controller.FightBreaker){   //UI break button
+                break;
+            }
             if(!accList.get(i).prePromoDone){
-            driver.get("http://www.tppcrpg.net/login.php");
-            driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
-            driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
-            if(driver.findElements(By.name("Validate")).size() > 0){
-                CaptchaBreaker cb = CaptchaBreaker.getInstance();
-                cb.solveCaptcha("Validation Image");
+                for(int e=0;e<controller.accountExcludedCombo.getItems().size();e++){
+                    if(controller.accountExcludedCombo.getItems().get(e).equals(accList.get(i))){
+                        excludedCheck = true;
+                    }
+                }
+                if(excludedCheck){
+                    continue;
+                }
+                driver.get("http://www.tppcrpg.net/login.php");
+                driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
+                driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
+                if(driver.findElements(By.name("Validate")).size() > 0){
+                    CaptchaBreaker cb = CaptchaBreaker.getInstance();
+                    cb.solveCaptcha("Validation Image");
+                }
+                if(driver.findElements(By.className("submit")).size() > 0){
+                    driver.findElement(By.className("submit")).click();
+                }
+                m.startMap("poke", "Heracross", 1); //Catch a heracross
+                /** Change to heracross **/
+                driver.get("http://www.tppcrpg.net/change_roster.php");
+                driver.get("http://www.tppcrpg.net/change_roster.php?c=&pn=214&o=");
+                driver.findElement(By.xpath("/html/body/div[@id='body']/div[@id='inner']/div[@id='rightR']/ul/li/div[@class='sl']/ul/li[1]/a")).click();
+                //changeMove("48");
+                changeMove("Close Combat");
+
+                /******************/
+
+                b.fight("2502909", 3);
+
+                /** Change item to TeamBoost **/
+                changeItem("Team Boost");
+                /******************/
+                b.fight("2502909", 5);
+                driver.get("http://www.tppcrpg.net/logout.php"); 
             }
-            if(driver.findElements(By.className("submit")).size() > 0){
-                driver.findElement(By.className("submit")).click();
-            }
-            m.startMap("poke", "Heracross", 1); //Catch a heracross
-            /** Change to heracross **/
-            driver.get("http://www.tppcrpg.net/change_roster.php");
-            driver.get("http://www.tppcrpg.net/change_roster.php?c=&pn=214&o=");
-            driver.findElement(By.xpath("/html/body/div[@id='body']/div[@id='inner']/div[@id='rightR']/ul/li/div[@class='sl']/ul/li[1]/a")).click();
-            //changeMove("48");
-            changeMove("Close Combat");
-            
-            /******************/
-            
-            b.fight("2502909", 3);
-            
-            /** Change item to TeamBoost **/
-            changeItem("Team Boost");
-            /******************/
-            b.fight("2502909", 5);
-            driver.get("http://www.tppcrpg.net/logout.php"); 
-            }
-            controller.multiProgress = (float)i / (float)(accList.size() -1);
+            controller.multiProgress = (float)(i+1) / (float)(accList.size());
             Platform.runLater(new Runnable() {
                 @Override public void run() {
                    controller.multiProgressBar.setProgress(controller.multiProgress);
@@ -531,7 +603,49 @@ public class Misc {
 
     }
 
-    
+    void accountsCatch() {
+        Map m = Map.getInstance();
+        accList = Account.getAccList();
+        boolean excludedCheck = false;
+        //if(!accList.get(i).prePromoDone){
+        for(int i=1;i<accList.size();i++){
+            excludedCheck = false;
+            if((!accList.get(i).prePromoDone && controller.listToCatchCheck.isSelected()) || (!controller.listToCatchCheck.isSelected()) ){
+                for(int e=0;e<controller.accountExcludedCombo.getItems().size();e++){
+                    if(controller.accountExcludedCombo.getItems().get(e).equals(accList.get(i))){
+                        excludedCheck = true;
+                    }
+                }
+                if(excludedCheck){
+                    continue;
+                }
+                driver.get("http://www.tppcrpg.net/login.php");
+                driver.findElement(By.name("LoginID")).sendKeys(accList.get(i).account);
+                driver.findElement(By.name("NewPass")).sendKeys(accList.get(i).password);
+                if(driver.findElements(By.name("Validate")).size() > 0){
+                    CaptchaBreaker cb = CaptchaBreaker.getInstance();
+                    cb.solveCaptcha("Validation Image");
+                }
+                if(driver.findElements(By.className("submit")).size() > 0){
+                    driver.findElement(By.className("submit")).click();
+                }
+
+                m.startMap("map", ""+(int)(Math.random()*10 + 2), Integer.valueOf(controller.listToCatchAmount.getText()));
+                /*if(driver.findElements(By.name("Find")).size() == 0){ //Remove accs that cant login
+                    accList.remove(i);
+                    continue;
+                }*/
+                
+                driver.get("http://www.tppcrpg.net/logout.php");
+            }
+            controller.multiProgress = (float)(i+1) / (float)(accList.size());;
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                   controller.multiProgressBar.setProgress(controller.multiProgress);
+                }
+            });
+        }
+    }
     
     public void changeItem(String item){ //Change to be applicable to all pokes in roster
         Select movesel;
@@ -587,6 +701,16 @@ public class Misc {
         }
 
     }
+    
+    public void checkFaint(){
+        if(driver.findElements(By.className("hpBar")).size() > 0){
+            if(driver.findElement(By.xpath("/html/body/div[@id='body']/div[@id='inner']/div[@id='battleWindow']/div[@id='ActiveBoxes']/div[@id='Trainer1_Active']/div[@class='innerContent']/fieldset/div[@class='hpBar']")).getAttribute("title").equals("0% HP Remaining")){
+                driver.findElement(By.className("rosterContent")).findElement(By.partialLinkText("")).click();
+            }
+        } 
+    }
+
+
     
  
     

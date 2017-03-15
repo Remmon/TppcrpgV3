@@ -27,13 +27,13 @@ import java.util.logging.Level;
 public class Time implements Serializable{
     
     static Time tm = null;
-    int fightSleepTime;
-    int fightSleepRandom;
+    int fightSleepMean;
+    int fightSleepDeviation;
     
-    int timeBetweenRest;
-    int timeBetweenRestRandom;
-    int timeToRest;
-    int timeToRestRandom;
+    int meanBetweenRest;
+    int deviationBetweenRest;
+    int restMean;
+    int restDeviation;
         
     private Time(){
     
@@ -49,54 +49,58 @@ public class Time implements Serializable{
     }
     
 
-
-    public void setFightSleepTime(int fightSleepTime) {
-        tm.fightSleepTime = fightSleepTime;
+    void setFightSleepMean(Integer fightSleepMean) {
+        tm.fightSleepMean = fightSleepMean;
     }
 
-    public void setFightSleepRandom(int fightSleepRandomMultiplier) {
-        tm.fightSleepRandom = fightSleepRandomMultiplier;
+    void setFightSleepDeviation(Integer fightSleepDeviation) {
+        tm.fightSleepDeviation = fightSleepDeviation;
     }
 
-    public void setTimeBetweenRest(int timeBetweenRest) {
-        tm.timeBetweenRest = timeBetweenRest;
+    public void setMeanBetweenRest(int meanBetweenRest) {
+        tm.meanBetweenRest = meanBetweenRest;
     }
 
-    public void setTimeBetweenRestRandom(int timeBetweenRestRandomMultiplier) {
-        tm.timeBetweenRestRandom = timeBetweenRestRandomMultiplier;
+    public void setDeviationBetweenRest(int deviationBetweenRest) {
+        tm.deviationBetweenRest = deviationBetweenRest;
     }
 
-    public void setTimeToRest(int timeToRest) {
-        tm.timeToRest = timeToRest;
+    public void setRestMean(int restMean) {
+        tm.restMean = restMean;
     }
 
-    public void setTimeToRestRandom(int timeToRestRandomMultiplier) {
-        tm.timeToRestRandom = timeToRestRandomMultiplier;
+    public void setRestDeviation(int restDeviation) {
+        tm.restDeviation = restDeviation;
+    }
+    
+    public int getFightSleepMean() {
+        return tm.fightSleepMean;
     }
 
-    public int getFightSleepTime() {
-        return tm.fightSleepTime;
+    public int getFightSleepDeviation() {
+        return tm.fightSleepDeviation;
     }
 
-    public int getFightSleepRandom() {
-        return tm.fightSleepRandom;
+    public int getMeanBetweenRest() {
+        return tm.meanBetweenRest;
     }
 
-    public int getTimeBetweenRest() {
-        return tm.timeBetweenRest;
+    public int getDeviationBetweenRest() {
+        return tm.deviationBetweenRest;
     }
 
-    public int getTimeBetweenRestRandom() {
-        return tm.timeBetweenRestRandom;
+    public int getRestMean() {
+        return tm.restMean;
     }
 
-    public int getTimeToRest() {
-        return tm.timeToRest;
+    public int getRestDeviation() {
+        return tm.restDeviation;
     }
-
-    public int getTimeToRestRandom() {
-        return tm.timeToRestRandom;
-    }
+    
+    
+    
+    
+    
     
     public void loadLogFromFile(){  //Loads previous log objects from a file.
         FileInputStream fiStream = null;
@@ -143,6 +147,9 @@ public class Time implements Serializable{
         }
 
     }
+
+
+
     
     
 }

@@ -76,7 +76,9 @@ public class CaptchaBreaker {
 
 
         String output = "";
-        ArrayList<WebElement> allImages = (ArrayList<WebElement>) driver.findElements(By.tagName("img"));
+        controller.defSleep();
+        ArrayList<WebElement> allImages = (ArrayList<WebElement>) driver.findElements(By.tagName("img")); //Nullpointer????
+
         for (int i=0; i<allImages.size(); i++){
             if(allImages.get(i).getAttribute("alt").equals(attrib/*"Congratulations!"*/)){                        
                 output = cb.crush(driver, allImages.get(i));
@@ -93,6 +95,7 @@ public class CaptchaBreaker {
             }
         }
         controller.defSleep();
+        
         return output;
     } 
   

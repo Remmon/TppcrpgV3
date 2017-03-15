@@ -34,7 +34,12 @@ public class Tppcbot extends Application {
         
         stage.setScene(scene);
         stage.setTitle("Tppcrpg bot");
-        stage.getIcons().add(new Image("Pictures/icon.png"));
+        stage.getIcons().add(new Image(Tppcbot.class.getResource("/Pictures/icon.png").toExternalForm()));
+        
+        String css = Tppcbot.class.getResource("/Pictures/tppc.css").toExternalForm();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+
         stage.show();
     }
 
@@ -50,8 +55,10 @@ public class Tppcbot extends Application {
     @Override
     public void stop() {
         Account.saveLogToFile();
+        Account.saveLogToFile2();
         tm = trainerManager.getInstance();
         tm.saveLogToFile();
+        tm.getDriver().get("http://www.tppcrpg.net/logout.php");
         tm.getDriver().close();
 
     }
