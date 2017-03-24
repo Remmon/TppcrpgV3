@@ -65,7 +65,7 @@ public class Account implements Serializable{
         this.email = email;
         
         this.team = team;
-        System.out.println(this.account + ":" + this.password + " (" + this.email + " " + this.team+")");
+        System.out.println(this.account + " (" + this.email + " " + this.team+")");
         
     }
 

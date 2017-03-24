@@ -34,11 +34,11 @@
                      <children>
                         <AnchorPane prefHeight="159.0" prefWidth="536.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button layoutX="172.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="17.0" prefWidth="48.0" text="Login" />
-                              <Button layoutX="289.0" layoutY="12.0" mnemonicParsing="false" onAction="#StopBotAction" prefHeight="55.0" prefWidth="56.0" text="Stop?" />
-                                <Button fx:id="button" layoutX="173.0" layoutY="42.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="104.0" text="Start FightBot!" />
-                              <TextField fx:id="trainingAccountField" layoutX="83.0" layoutY="42.0" prefHeight="25.0" prefWidth="85.0" promptText="Training account #" />
-                              <ListView fx:id="trainingListView" layoutX="14.0" layoutY="77.0" prefHeight="173.0" prefWidth="208.0" />
+                              <Button layoutX="318.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="17.0" prefWidth="48.0" text="Login" />
+                              <Button layoutX="433.0" layoutY="15.0" mnemonicParsing="false" onAction="#StopBotAction" prefHeight="55.0" prefWidth="56.0" text="Stop" />
+                                <Button fx:id="button" layoutX="318.0" layoutY="42.0" onAction="#handleButtonAction" prefHeight="28.0" prefWidth="107.0" text="Start FightBot!" />
+                              <TextField fx:id="trainingAccountField" layoutX="83.0" layoutY="42.0" prefHeight="25.0" prefWidth="132.0" promptText="Training account #" />
+                              <ListView fx:id="trainingListView" layoutX="14.0" layoutY="77.0" prefHeight="271.0" prefWidth="264.0" />
                               <Label fx:id="levelLabel" layoutX="14.0" layoutY="46.0" prefHeight="17.0" prefWidth="69.0" text="level: 13000" />
                               <ProgressBar fx:id="LevelProgress" layoutX="19.0" layoutY="448.0" prefHeight="25.0" prefWidth="501.0" progress="0.5" styleClass="ProgressBar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                                  <opaqueInsets>
@@ -50,8 +50,8 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="223.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="25.0" prefWidth="54.0" text="Logout" />
-                              <GridPane gridLinesVisible="true" layoutX="285.0" layoutY="77.0" prefHeight="169.0" prefWidth="232.0" style="-fx-grid-lines-visible: true;">
+                              <Button layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutButtonAction" prefHeight="25.0" prefWidth="54.0" text="Logout" />
+                              <GridPane gridLinesVisible="true" layoutX="511.0" layoutY="80.0" prefHeight="169.0" prefWidth="232.0" style="-fx-grid-lines-visible: true;">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -155,16 +155,16 @@
                                  </children>
                               </GridPane>
                               <ImageView fx:id="pokeImageView" fitHeight="78.0" fitWidth="56.0" layoutX="21.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
-                              <TextField fx:id="breakField3" layoutX="451.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #3" />
-                              <TextField fx:id="breakField4" layoutX="287.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #4" />
-                              <TextField fx:id="breakField6" layoutX="451.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #6" />
-                              <TextField fx:id="breakField5" layoutX="371.0" layoutY="294.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #5" />
-                              <TextField fx:id="breakField2" layoutX="371.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #2" />
-                              <Button layoutX="356.0" layoutY="11.0" mnemonicParsing="false" onAction="#completeAllAltTradesAction" prefHeight="57.0" prefWidth="158.0" text="Complete all trades" />
-                              <ComboBox fx:id="accountMainCombo" layoutX="14.0" layoutY="14.0" onAction="#accountMainAction" prefHeight="25.0" prefWidth="155.0" />
-                              <CheckBox fx:id="breakEnabled" layoutX="344.0" layoutY="330.0" mnemonicParsing="false" text="Level cap enabled" />
-                              <TextField fx:id="breakField1" layoutX="287.0" layoutY="263.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #1" />
-                              <Label fx:id="battleExpLabel" layoutX="92.0" layoutY="339.0" text="Experience gained: " />
+                              <TextField fx:id="breakField3" layoutX="679.0" layoutY="266.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #3" />
+                              <TextField fx:id="breakField4" layoutX="515.0" layoutY="297.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #4" />
+                              <TextField fx:id="breakField6" layoutX="679.0" layoutY="297.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #6" />
+                              <TextField fx:id="breakField5" layoutX="599.0" layoutY="297.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #5" />
+                              <TextField fx:id="breakField2" layoutX="599.0" layoutY="266.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #2" />
+                              <Button layoutX="582.0" layoutY="14.0" mnemonicParsing="false" onAction="#completeAllAltTradesAction" prefHeight="57.0" prefWidth="158.0" text="Complete all trades" />
+                              <ComboBox fx:id="accountMainCombo" layoutX="14.0" layoutY="14.0" onAction="#accountMainAction" prefHeight="25.0" prefWidth="263.0" />
+                              <CheckBox fx:id="breakEnabled" layoutX="570.0" layoutY="333.0" mnemonicParsing="false" text="Level cap enabled" />
+                              <TextField fx:id="breakField1" layoutX="515.0" layoutY="266.0" prefHeight="25.0" prefWidth="60.0" promptText="Break #1" />
+                              <Label fx:id="battleExpLabel" layoutX="291.0" layoutY="88.0" text="Experience gained: " />
                            </children>
                         </AnchorPane>
                      </children>
@@ -177,24 +177,24 @@
                      <children>
                         <ImageView fx:id="imageView" fitHeight="65.0" fitWidth="271.0" layoutX="251.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="captchaLabel" layoutX="253.0" layoutY="112.0" text="Captcha: " />
-                        <TextField fx:id="deviationBetweenRest" layoutX="123.0" layoutY="262.0" prefHeight="25.0" prefWidth="69.0" />
-                        <TextField fx:id="restMean" layoutX="123.0" layoutY="291.0" prefHeight="25.0" prefWidth="111.0" />
-                        <Label layoutX="14.0" layoutY="238.0" text="Mean between rests:" />
-                        <Label layoutX="49.0" layoutY="326.0" text="Std deviation:" />
-                        <TextField fx:id="restDeviation" layoutX="123.0" layoutY="322.0" prefHeight="25.0" prefWidth="69.0" />
-                        <Label layoutX="13.0" layoutY="297.0" text="Mean for rest length:" />
-                        <TextField fx:id="meanBetweenRest" layoutX="123.0" layoutY="234.0" prefHeight="25.0" prefWidth="111.0" />
-                        <Label layoutX="49.0" layoutY="266.0" text="Std deviation:" />
-                        <Button layoutX="411.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveSettingsAction" prefHeight="25.0" prefWidth="96.0" text="Save settings" />
-                        <Label layoutX="316.0" layoutY="238.0" text="Mean(ms):" />
-                        <TextField fx:id="fightSleepMeanField" layoutX="376.0" layoutY="234.0" prefHeight="25.0" prefWidth="131.0" />
-                        <Label layoutX="253.0" layoutY="266.0" text="Standard deviation(ms):" />
-                        <TextField fx:id="fightSleepDeviationField" layoutX="376.0" layoutY="262.0" prefHeight="25.0" prefWidth="131.0" />
-                        <Line endX="600.0" endY="-20.0" layoutX="101.0" layoutY="223.0" startX="-100.0" startY="-20.0" strokeWidth="0.3" AnchorPane.leftAnchor="0.5" AnchorPane.rightAnchor="-165.5" />
-                        <Label layoutX="54.0" layoutY="214.0" text="Big sleep(in minutes)" />
-                        <Label layoutX="255.0" layoutY="214.0" text="Time to rest between actions(normal distribution):" />
-                        <Line endX="100.0" layoutX="251.0" layoutY="305.0" opacity="0.52" rotate="90.0" startX="-100.0" />
-                        <Button layoutX="263.0" layoutY="322.0" mnemonicParsing="false" onAction="#standardRandomAction" text="Test &amp; refresh random" />
+                        <TextField fx:id="deviationBetweenRest" layoutX="175.0" layoutY="315.0" prefHeight="25.0" prefWidth="69.0" />
+                        <TextField fx:id="restMean" layoutX="175.0" layoutY="344.0" prefHeight="25.0" prefWidth="111.0" />
+                        <Label layoutX="66.0" layoutY="291.0" text="Mean between rests:" />
+                        <Label layoutX="101.0" layoutY="379.0" text="Std deviation:" />
+                        <TextField fx:id="restDeviation" layoutX="175.0" layoutY="375.0" prefHeight="25.0" prefWidth="69.0" />
+                        <Label layoutX="65.0" layoutY="350.0" text="Mean for rest length:" />
+                        <TextField fx:id="meanBetweenRest" layoutX="175.0" layoutY="287.0" prefHeight="25.0" prefWidth="111.0" />
+                        <Label layoutX="101.0" layoutY="319.0" text="Std deviation:" />
+                        <Button layoutX="600.0" layoutY="368.0" mnemonicParsing="false" onAction="#saveSettingsAction" prefHeight="25.0" prefWidth="96.0" text="Save settings" />
+                        <Label layoutX="505.0" layoutY="284.0" text="Mean(ms):" />
+                        <TextField fx:id="fightSleepMeanField" layoutX="565.0" layoutY="280.0" prefHeight="25.0" prefWidth="131.0" />
+                        <Label layoutX="442.0" layoutY="312.0" text="Standard deviation(ms):" />
+                        <TextField fx:id="fightSleepDeviationField" layoutX="565.0" layoutY="308.0" prefHeight="25.0" prefWidth="131.0" />
+                        <Line endX="800.0" endY="-20.0" layoutX="101.0" layoutY="223.0" startX="-100.0" startY="-20.0" strokeWidth="0.3" AnchorPane.leftAnchor="0.5" AnchorPane.rightAnchor="0.0" />
+                        <Label layoutX="106.0" layoutY="267.0" text="Big sleep(in minutes)" />
+                        <Label layoutX="444.0" layoutY="260.0" text="Time to rest between actions(normal distribution):" />
+                        <Line endX="100.0" layoutX="382.0" layoutY="305.0" opacity="0.52" rotate="90.0" scaleX="2.0" startX="-100.0" AnchorPane.bottomAnchor="181.5" AnchorPane.topAnchor="400.0" />
+                        <Button layoutX="452.0" layoutY="368.0" mnemonicParsing="false" onAction="#standardRandomAction" text="Test &amp; refresh random" />
                         <Label fx:id="restAverageLabel" layoutX="14.0" layoutY="14.0" text="Rest Averages here" />
                      </children>
                   </AnchorPane>
@@ -230,10 +230,10 @@
                         <RadioButton fx:id="radioItem" layoutX="15.0" layoutY="320.0" mnemonicParsing="false" onAction="#radioItemAction" text="Item" />
                         <ComboBox fx:id="pokemonHuntMapComboBox" layoutX="74.0" layoutY="296.0" prefHeight="25.0" prefWidth="145.0" />
                         <Button layoutX="161.0" layoutY="129.0" mnemonicParsing="false" onAction="#trainingChallengeAction" prefHeight="25.0" prefWidth="122.0" text="Training Challenge" />
-                        <TextField fx:id="legendaryAmount" disable="true" layoutX="223.0" layoutY="243.0" prefHeight="25.0" prefWidth="58.0" promptText="how many" />
-                        <Button disable="true" layoutX="286.0" layoutY="243.0" mnemonicParsing="false" onAction="#legendaryBotAction" prefHeight="25.0" prefWidth="118.0" text="Start LegendaryBot" />
-                        <ComboBox fx:id="legendaryCombo" disable="true" layoutX="72.0" layoutY="243.0" prefWidth="150.0" />
-                        <Label layoutX="410.0" layoutY="247.0" text="Party: 6x giratina" />
+                        <TextField fx:id="legendaryAmount" disable="true" layoutX="223.0" layoutY="243.0" prefHeight="25.0" prefWidth="58.0" promptText="how many" visible="false" />
+                        <Button disable="true" layoutX="286.0" layoutY="243.0" mnemonicParsing="false" onAction="#legendaryBotAction" prefHeight="25.0" prefWidth="118.0" text="Start LegendaryBot" visible="false" />
+                        <ComboBox fx:id="legendaryCombo" disable="true" layoutX="72.0" layoutY="243.0" prefWidth="150.0" visible="false" />
+                        <Label layoutX="410.0" layoutY="247.0" text="Party: 6x giratina" visible="false" />
                      </children>
                   </AnchorPane>
               </content>
@@ -296,8 +296,7 @@
                         <TextField fx:id="accountNumberField" layoutX="40.0" layoutY="102.0" prefHeight="25.0" prefWidth="210.0" promptText="number of accounts" />
                         <TextField fx:id="accountGmailField" layoutX="40.0" layoutY="139.0" prefHeight="25.0" prefWidth="135.0" promptText="gmail account" />
                         <Button layoutX="40.0" layoutY="234.0" mnemonicParsing="false" onAction="#accountCreateAction" prefHeight="33.0" prefWidth="210.0" text="Start Account maker" />
-                        <TextField fx:id="accountPrefixField" layoutX="40.0" layoutY="23.0" prefHeight="25.0" prefWidth="210.0" promptText="Account name" />
-                        <TextField fx:id="accountPasswordField" layoutX="40.0" layoutY="62.0" prefHeight="25.0" prefWidth="210.0" promptText="Password" />
+                        <TextField fx:id="accountPrefixField" layoutX="40.0" layoutY="23.0" prefHeight="25.0" prefWidth="210.0" promptText="Account name" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="513.0" />
                         <ComboBox fx:id="accountTeamCombo" layoutX="40.0" layoutY="174.0" prefHeight="25.0" prefWidth="210.0" />
                         <RadioButton fx:id="fPokeRadio" layoutX="43.0" layoutY="212.0" mnemonicParsing="false" onAction="#fPokeRadioAction" selected="true" text="1st " />
                         <RadioButton fx:id="sPokeRadio" layoutX="112.0" layoutY="212.0" mnemonicParsing="false" onAction="#sPokeRadioAction" text="2nd" />
@@ -342,6 +341,7 @@
                         <TextField fx:id="listToBattleAmount" layoutX="371.0" layoutY="321.0" prefHeight="25.0" prefWidth="43.0" promptText="amount" />
                         <CheckBox fx:id="listToRandomCheck" layoutX="420.0" layoutY="389.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="random" />
                         <TextField fx:id="listToRandom" layoutX="287.0" layoutY="385.0" prefHeight="25.0" prefWidth="125.0" promptText="random (catch / battle)" />
+                        <PasswordField fx:id="accountPasswordField" layoutX="43.0" layoutY="62.0" prefHeight="25.0" prefWidth="206.0" promptText="Password" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="513.0" />
                      </children>
                   </AnchorPane>
               </content>
