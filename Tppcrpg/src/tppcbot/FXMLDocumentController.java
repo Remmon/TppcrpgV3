@@ -251,6 +251,16 @@ public class FXMLDocumentController implements Initializable {
     public ListView<Account> accountExcludedCombo;
     @FXML
     public Label battleExpLabel;
+    @FXML
+    public ListView<String> multiAccListView;
+    @FXML
+    private TextField listToBattleAccount;
+    @FXML
+    private TextField listToBattleAmount;
+    @FXML
+    public CheckBox listToRandomCheck;
+    @FXML
+    public TextField listToRandom;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -288,7 +298,7 @@ public class FXMLDocumentController implements Initializable {
         multiProgressBar.setProgress(multiProgress);
         listToCatchAmount.setText("5");
         Account.loadLogFromFile();
-        listToTradeAccount.setText("3461433");
+        listToTradeAccount.setText("3461715");
         accList = Account.getAccList();
         if(!accList.isEmpty()){
             accountCombo.getItems().setAll(accList.subList(1, accList.size()));
@@ -736,43 +746,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void listToTradeAction(ActionEvent event) {
-        Task task = new Task<Void>() {
-        @Override public Void call() {
-            Misc mi = Misc.getInstance();
-            mi.accountsTrade();
-        System.out.println("Ending trading making.");
-        
-        return null;
-            }
-    };
-    task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
-            if(newValue != null) {
-              Exception ex = (Exception) newValue;
-              ex.printStackTrace();
-            }
-        });
-    new Thread(task).start();
-        
+        multiAccListView.getItems().add("trade,"+listToTradeAccount.getText()+"");
     }
 
     @FXML
-    private void listToCatchAction(ActionEvent event) {
+    private void listToCatchAction(ActionEvent event) {        
+        multiAccListView.getItems().add("catch,"+listToCatchAmount.getText()+"");
 
-        Task task = new Task<Void>() {
-            @Override public Void call() {
-                Misc mi = Misc.getInstance();
-                mi.accountsCatch();
-
-                return null;
-        }
-    };
-    task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
-            if(newValue != null) {
-              Exception ex = (Exception) newValue;
-              ex.printStackTrace();
-            }
-        });
-    new Thread(task).start();
         
     }
 
@@ -799,22 +779,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void getTeamPromoAction(ActionEvent event) {
-        Task task = new Task<Void>() {
-            @Override public Void call() {
-            Misc mi = Misc.getInstance();
-            mi.accountsPromo();
-            System.out.println("Ending team promo hunting.");
-
-            return null;
-            }   
-        };
-    task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
-            if(newValue != null) {
-              Exception ex = (Exception) newValue;
-              ex.printStackTrace();
-            }
-        });
-    new Thread(task).start();
+            multiAccListView.getItems().add("promo");
     }
 
     @FXML
@@ -846,37 +811,12 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void startPreFighterAction(ActionEvent event) {
-        
-        Task task = new Task<Void>() {
-        @Override public Void call() {
-            Misc mi = Misc.getInstance();
-            mi.accountsPreFight();
 
-            return null;
-            }
-        };
-    task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
-            if(newValue != null) {
-              Exception ex = (Exception) newValue;
-              ex.printStackTrace();
-            }
-        });
-    new Thread(task).start();
+            multiAccListView.getItems().add("prepromo");
     
     }
 
     
-    //Unused
-    public void catchMap(String choice, String vari){
-        if(choice.equals("map")){ //Map by map,  vari = map number
-        
-        } else if (choice.equals("poke")){ //Map by poke, vari = poke name
-                
-        } else if (choice.equals("item")){ //Map by item, vari = item name
-                
-        }
-    
-    }
 
     @FXML
     private void completeAllAltTradesAction(ActionEvent event) {
@@ -1164,7 +1104,63 @@ public class FXMLDocumentController implements Initializable {
     private void accountIncludeAction(ActionEvent event) {
         Account.excludeList.remove(accountExcludedCombo.getSelectionModel().getSelectedItem());
         accountExcludedCombo.getItems().setAll(Account.getExcludeList());
+    
     }
+
+    @FXML
+    private void loadAccountsFromGmailAction(ActionEvent event) {
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+
+                Misc mi = Misc.getInstance();
+                mi.loadAccounts();
+                accountCombo.getItems().setAll(accList.subList(1, accList.size()));
+                accountMainCombo.getItems().setAll(accList.subList(1, accList.size()));
+
+                return null;
+            }
+        };
+        task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
+                if(newValue != null) {
+                  Exception ex = (Exception) newValue;
+                  ex.printStackTrace();
+                }
+            }); 
+        new Thread(task).start();
+        
+    }
+
+    @FXML
+    private void startMultiAccBot(ActionEvent event) {
+        Task task = new Task<Void>() {
+           @Override public Void call() {
+                Misc mi = Misc.getInstance();
+                mi.multiAcc();
+                return null;
+            }
+        };
+        task.exceptionProperty().addListener((observable, oldValue, newValue) ->  {
+                if(newValue != null) {
+                  Exception ex = (Exception) newValue;
+                  ex.printStackTrace();
+                }
+            }); 
+        new Thread(task).start();
+    }
+
+    @FXML
+    private void emptyMultiAccBot(ActionEvent event) {
+        multiAccListView.getItems().remove(multiAccListView.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void listToBattleAction(ActionEvent event) {
+
+            multiAccListView.getItems().add("fight,"+listToBattleAccount.getText()+","+Integer.valueOf(listToBattleAmount.getText()));
+
+    }
+
 
 
 }

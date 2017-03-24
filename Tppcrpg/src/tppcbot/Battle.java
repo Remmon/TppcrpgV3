@@ -20,7 +20,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import static tppcbot.TppcSub.driver;
 
 /**
  *
@@ -81,6 +80,9 @@ public class Battle {
                 }
                 if(driver.findElements(By.name("LoginID")).size() > 0){
                     mi.login(controller.accountField.getText(), controller.passwordField.getText());
+                    driver.get("http://www.tppcrpg.net/battle_trainer.php");
+                    driver.findElement(By.id("Trainer")).sendKeys(battleid);
+                    driver.findElement(By.className("submit"));
                 }
                 controller.defSleep();
                 estimatedTime  = System.currentTimeMillis() - startTime;
@@ -93,8 +95,6 @@ public class Battle {
                 expEstimatedTime = System.currentTimeMillis() - expStartTime;
                 Platform.runLater(new Runnable() {
                     @Override public void run() {
-
-                        controller.updateUI();
                         expEstimatedTime = System.currentTimeMillis() - expStartTime;
                         int tempLvl = ((Pokemon)p.getPartyList().get(0)).getLevel();
                         double tempExp = Math.pow(((double)tempLvl), 3.0);
@@ -131,7 +131,12 @@ public class Battle {
                     startTime = System.currentTimeMillis();
                     driver.findElement(By.linkText("Restart Battle")).click();
                     calc++;
-
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+                            controller.updateUI();
+                        }
+                    });
+                    
                     if(calc > battleAmount && battleAmount > 0){
                         break;
                     }
@@ -145,8 +150,7 @@ public class Battle {
                 controller.defSleep();
 
             }catch (org.openqa.selenium.StaleElementReferenceException e){
-                //e.printStackTrace();
-                System.out.println("Stale element while fighting (nothing to worry)");
+                //System.out.println("Stale element while fighting (nothing to worry)");
             } catch (Exception e){
                 e.printStackTrace();
             }

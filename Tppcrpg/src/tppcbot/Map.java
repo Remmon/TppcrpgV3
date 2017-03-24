@@ -121,8 +121,13 @@ public class Map {
                 break;
             }
             if(mode.equals("map")){
-                driver.get("http://www.tppcrpg.net/map.php?Map="+(mapList.indexOf(variList[i])+1));
+                if(Integer.valueOf(vari) > 0 && Integer.valueOf(vari) < 15){
+                    driver.get("http://www.tppcrpg.net/map.php?Map="+(variList[i]));
+                } else {
+                    driver.get("http://www.tppcrpg.net/map.php?Map="+(mapList.indexOf(variList[i])+1));
+                }
                 while(true){
+                    controller.defSleep();
                     if(controller.FightBreaker){
                         break;
                     }
@@ -168,6 +173,7 @@ public class Map {
 
                 driver.get("http://www.tppcrpg.net/map.php?Map="+mapid);
                 while(true){
+                    controller.defSleep();
                     if(controller.FightBreaker){
                         break;
                     }
@@ -211,6 +217,7 @@ public class Map {
                 }
                 driver.get("http://www.tppcrpg.net/map.php?Map="+mapid);
                 while(true){
+                    controller.defSleep();
                     if(controller.FightBreaker){
                         break;
                     }
@@ -251,13 +258,13 @@ public class Map {
         driver.findElement(By.linkText("Lets Battle!")).click();
         while(true){
             try{
+                controller.defSleep();
                 if (driver.findElements(By.id("Validate")).size() > 0 ){
                     CaptchaBreaker cb = CaptchaBreaker.getInstance();
                     cb.solveCaptcha("Congratulations!");
                 } else if (driver.findElements(By.className("submit")).size() != 0){
                     driver.findElement(By.className("submit")).click();
                 }
-                mi.checkFaint();
                 if(driver.findElements(By.id("battleText")).size() > 0){
                     ArrayList<WebElement> battleTxt = (ArrayList<WebElement>) driver.findElement(By.id("battleText")).findElements(By.tagName("li"));
                     for(int a=0;a<battleTxt.size();a++){
@@ -268,6 +275,7 @@ public class Map {
                     }
 
                 }
+                mi.checkFaint();
             } catch (Exception e){
                 e.printStackTrace();
             }
